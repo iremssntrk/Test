@@ -1,7 +1,7 @@
-﻿<Application x:Class="MarinePararmCalculator.App"
+﻿<Application x:Class="MarineParamCalculator.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:MarinePararmCalculator"
+             xmlns:local="clr-namespace:MarineParamCalculator"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
          

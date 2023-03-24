@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MarinePararmCalculator.Properties
+namespace MarineParamCalculator.Properties
 {
 
 

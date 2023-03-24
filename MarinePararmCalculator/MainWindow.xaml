@@ -1,17 +1,17 @@
-﻿<Window x:Class="MarinePararmCalculator.MainWindow"
+﻿<Window x:Class="MarineParamCalculator.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:MarinePararmCalculator"
+        xmlns:local="clr-namespace:MarineParamCalculator"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid Loaded="Grid_Loaded">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="5*"/>
             <ColumnDefinition Width="8*"/>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
@@ -38,7 +38,13 @@
         <Border BorderBrush="Black" BorderThickness="1" Grid.Column="1" HorizontalAlignment="Right" Height="2" Margin="0,221,31,0" Grid.Row="1" VerticalAlignment="Top" Width="138"/>
         <Button Grid.Column="1" Content="Calculate" HorizontalAlignment="Left" Margin="65,277,0,0" Grid.Row="1" VerticalAlignment="Top" Height="31" Width="74" Click="ButtonClick"/>
 
-
+        <StackPanel Grid.Column="3" Grid.Row="1">
+            <Button x:Name="NavBar_button1" Content="Calc Directory" Click="controlbtn_Click" Height="40"/>
+            <Button x:Name="NavBar_button2" Content="Log Directory" Height="40"/>
+            <Button x:Name="NavBar_button3" Content="Display Calculation" Height="40" Click="NavBar_button3_Click"/>
+            <Button x:Name="NavBar_button4" Content="Display Log" Height="40" Click="NavBar_button4_Click"/>
+        </StackPanel>
+        <ListBox x:Name="ListBox" Grid.Column="2" HorizontalAlignment="Left" Height="305" Margin="29,0,0,0" Grid.Row="1" VerticalAlignment="Center" Width="348" />
 
     </Grid>
 </Window>

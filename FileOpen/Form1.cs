@@ -15,7 +15,8 @@ namespace FileOpen
 {
     public partial class Form1 : Form
     {
-        string[] paths = new string[30];
+        string[] 
+            s = new string[30];
         public Form1()
         {
             InitializeComponent();
