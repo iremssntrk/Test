@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MarinePararmCalculator.Path
+namespace MarinePararmCalculator.FilePath
 {
     class OpenFileDialogClass:IPathSelection
     {

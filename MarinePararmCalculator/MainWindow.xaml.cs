@@ -18,8 +18,10 @@ using System.Windows.Shapes;
 using System.Drawing;
 using System.IO;
 using static System.Net.Mime.MediaTypeNames;
-using MarinePararmCalculator.Path;
+using MarinePararmCalculator.FilePath;
 using MarinePararmCalculator;
+using MarinePararmCalculator.Entities;
+using MarinePararmCalculator.Calculation;
 
 namespace MarineParamCalculator
 {
@@ -30,7 +32,6 @@ namespace MarineParamCalculator
     {
         string pathCalculation;
         string pathLog;
-        StreamWriter writer;
         public MainWindow()
         {
             InitializeComponent();
@@ -42,49 +43,31 @@ namespace MarineParamCalculator
             string directory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop); ;   //default location
             pathCalculation = System.IO.Path.Combine(directory, "calc.txt");
             pathCalculation = System.IO.Path.Combine(directory, "log.txt");
-            writer = File.CreateText(pathCalculation);
+            //writer = File.CreateText(pathCalculation);
         }
 
 
         private void ButtonClick(object sender, RoutedEventArgs e)  
         {
-            List<double> Cbs = new List<double>();
-            List<double> Deltas = new List<double>();
-            writer.Close();
-            writer = File.CreateText(pathCalculation);
-            int Delta_m;
-            //Calculation delta 
-            for (int i = 0; i < 6; i++)
+            List<CalculationParameter> calculatedParams = new List<CalculationParameter>();
+            CalculationParameter Params = new CalculationParameter();
+            Params.Cb=Int32.Parse(Cb_Text.Text);
+            Params.Delta = Int32.Parse(Delta_Text.Text);
+            Params.B = Int32.Parse(B_Text.Text);
+            Params.L = Int32.Parse(L_Text.Text);
+            Params.T = Int32.Parse(T_Text.Text);
+
+            Calculator calculator = new Calculator();
+            calculatedParams=calculator.Delta(Params);
+            calculator.Cb(ref calculatedParams, Params);
+
+            foreach (var item in calculatedParams)
             {
-                if (int.TryParse(Delta_Text.Text, out Delta_m))
-                    Deltas.Add(Delta_m * i / 5);
+                item.L = Params.L;
+                item.T = Params.T;
+                item.B = Params.B;
             }
-            foreach (var delta in Deltas)
-            {
-                if (delta != 0)
-                {
-                    Cbs.Add(int.Parse(B_Text.Text) * int.Parse(L_Text.Text) * int.Parse(T_Text.Text) / delta);
-                }
-                else
-                {
-                    Cbs.Add(0);
-                }
-            }
-
-            Write($"{"[B]",-11:f} {"[L]",-11:f} {"[T]",-11:f} {"[Cb]",-11:f} {"[Δ]",-11:f} ");
-
-            for (int i = 0; i < 6; i++)
-            {         
-             Write($"{B_Text.Text,-11:f} {L_Text.Text,-11:f} {T_Text.Text,-11:f} {Cbs[i].ToString("0.00"),-11:f} {Deltas[i].ToString("0.00"),-11:f} ");
-            }
-            writer.Close();
-        }
-
-
-
-        public void Write(string text)
-        {
-            writer.WriteLine(text);
+            Utilities.WriteText(calculatedParams, pathCalculation);
         }
 
 
