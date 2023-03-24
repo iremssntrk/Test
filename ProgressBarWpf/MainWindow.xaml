@@ -1,0 +1,15 @@
+﻿<Window x:Class="ProgressBarWpf.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ProgressBarWpf"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="391" Width="533" Loaded="Window_Load">
+    <Grid Height="NaN" Margin="0,0,0,10" Width="NaN">
+        <ProgressBar x:Name="ProgressBar1" HorizontalAlignment="Left" Height="24" Margin="171,122,0,0" VerticalAlignment="Top" Width="250"/>
+        <TextBox x:Name="TextBox1" HorizontalAlignment="Center" Height="26" Margin="0,229,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="55"/>
+        <Label Content="Süre (s)" HorizontalAlignment="Center" Height="27" Margin="0,197,0,0" VerticalAlignment="Top" Width="55"/>
+
+    </Grid>
+</Window>

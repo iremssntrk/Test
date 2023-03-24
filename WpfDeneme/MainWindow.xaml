@@ -1,0 +1,20 @@
+﻿<Window x:Class="WpfDeneme.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfDeneme"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="499" Width="815">
+
+
+    <Grid AutomationProperties.Name="Button1" Margin="10,28,175,42">
+        <TextBox x:Name="TextBox2" Height="40" Width="70" Margin="267,173,197,133" BorderThickness="4"/>
+        <Button x:Name="Button1" Height="50" Width="70" Margin="267,248,197,48" Click="Button1_Click_1">
+            Prime Check
+        </Button>
+        <ListBox Margin="433,160,68,47" x:Name="ListBox1"/>
+        <Label Width="190" Content="" HorizontalAlignment="Left" Margin="271,88,0,0" VerticalAlignment="Top" x:Name="Label1" Background="#00000000"/>
+    </Grid>
+
+</Window>
