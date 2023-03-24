@@ -18,8 +18,8 @@ using System.Windows.Shapes;
 using System.Drawing;
 using System.IO;
 using static System.Net.Mime.MediaTypeNames;
-
-
+using MarinePararmCalculator.Path;
+using MarinePararmCalculator;
 
 namespace MarineParamCalculator
 {
@@ -36,16 +36,17 @@ namespace MarineParamCalculator
             InitializeComponent();
         }
 
-        private void Grid_Loaded(object sender, RoutedEventArgs e)
+        private void Grid_Loaded(object sender, RoutedEventArgs e)  
         {
 
-            string directory = "C:\\Users\\isenturk\\Desktop";   //default location
+            string directory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop); ;   //default location
             pathCalculation = System.IO.Path.Combine(directory, "calc.txt");
+            pathCalculation = System.IO.Path.Combine(directory, "log.txt");
             writer = File.CreateText(pathCalculation);
         }
 
 
-        private void ButtonClick(object sender, RoutedEventArgs e)
+        private void ButtonClick(object sender, RoutedEventArgs e)  
         {
             List<double> Cbs = new List<double>();
             List<double> Deltas = new List<double>();
@@ -76,11 +77,10 @@ namespace MarineParamCalculator
             {         
              Write($"{B_Text.Text,-11:f} {L_Text.Text,-11:f} {T_Text.Text,-11:f} {Cbs[i].ToString("0.00"),-11:f} {Deltas[i].ToString("0.00"),-11:f} ");
             }
-
-
             writer.Close();
-
         }
+
+
 
         public void Write(string text)
         {
@@ -88,45 +88,47 @@ namespace MarineParamCalculator
         }
 
 
-
-
-        private void controlbtn_Click(object sender, RoutedEventArgs e)   
-        {
-            var filedialog = new OpenFileDialog();
-            filedialog.Filter = "txt | *.txt";
-            if (filedialog.ShowDialog() == true)
-            {
-                pathCalculation = filedialog.FileName;
-            }
-
-        }
-
         private void NavBar_button3_Click(object sender, RoutedEventArgs e)   //Display calculation
         {
-            pathCalculation = pathCalculation;
-            DisplayFile(pathCalculation);
+            Utilities.DisplayFile(pathCalculation, ListBox); ;
         }
 
         private void NavBar_button4_Click(object sender, RoutedEventArgs e)   //Display Log
         {
-            pathLog = pathLog;
-            DisplayFile(pathLog);
+            Utilities.DisplayFile(pathLog, ListBox);
         }
 
-        public void DisplayFile(string path)
+
+
+        private void NavBar_button2_Click(object sender, RoutedEventArgs e)  //Log direction selection
         {
-            String line;
-            ListBox.Items.Clear();
-            StreamReader sr = new StreamReader(path);
-            line = sr.ReadLine();
-            while (line != null)
+            OpenFileDialogClass openFileDialogClass = new OpenFileDialogClass();
+            var path= openFileDialogClass.FileSelection("txt | *.txt");
+            if (path!=null)
             {
-                ListBox.Items.Add(line);
-                line = sr.ReadLine();
+                pathLog = path;
             }
-            //close the file
-            sr.Close();
+            
         }
+
+
+        private void controlbtn_Click(object sender, RoutedEventArgs e)   //Calculation direction
+        {
+            OpenFileDialogClass openFileDialogClass = new OpenFileDialogClass();
+            var path = openFileDialogClass.FileSelection("txt | *.txt");
+            if (path != null)
+            {
+                pathCalculation = path;
+            }
+
+        }
+
+
+        public void Logger()
+        {
+
+        }
+
     }
 }
 

@@ -40,7 +40,7 @@
 
         <StackPanel Grid.Column="3" Grid.Row="1">
             <Button x:Name="NavBar_button1" Content="Calc Directory" Click="controlbtn_Click" Height="40"/>
-            <Button x:Name="NavBar_button2" Content="Log Directory" Height="40"/>
+            <Button x:Name="NavBar_button2" Content="Log Directory" Height="40" Click="NavBar_button2_Click"/>
             <Button x:Name="NavBar_button3" Content="Display Calculation" Height="40" Click="NavBar_button3_Click"/>
             <Button x:Name="NavBar_button4" Content="Display Log" Height="40" Click="NavBar_button4_Click"/>
         </StackPanel>
