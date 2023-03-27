@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MarinePararmCalculator.Entities
 {
-    public class CalculationParameter
+    public class Parameter
     {
         public double B { get; set; }
         public double L { get; set; }

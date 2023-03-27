@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MarinePararmCalculator.Utilities.Error;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,6 @@ namespace MarinePararmCalculator.FilePath
 {
     public interface IPathSelection
     {
-        string FileSelection(string filter);
+        IDataResult<string> FileSelection(string filter);
 }
      }

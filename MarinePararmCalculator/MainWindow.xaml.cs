@@ -2,7 +2,6 @@
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,12 +15,13 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Drawing;
-using System.IO;
-using static System.Net.Mime.MediaTypeNames;
 using MarinePararmCalculator.FilePath;
 using MarinePararmCalculator;
 using MarinePararmCalculator.Entities;
 using MarinePararmCalculator.Calculation;
+using MarinePararmCalculator.Utilities;
+using System.Runtime.Remoting.Contexts;
+using MarinePararmCalculator.Utilities.FilePath;
 
 namespace MarineParamCalculator
 {
@@ -42,76 +42,104 @@ namespace MarineParamCalculator
 
             string directory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop); ;   //default location
             pathCalculation = System.IO.Path.Combine(directory, "calc.txt");
-            pathCalculation = System.IO.Path.Combine(directory, "log.txt");
-            //writer = File.CreateText(pathCalculation);
+            pathLog = System.IO.Path.Combine(directory, "log.txt");
         }
 
 
-        private void ButtonClick(object sender, RoutedEventArgs e)  
+        private void CalculateButtonClick(object sender, RoutedEventArgs e)  
         {
-            List<CalculationParameter> calculatedParams = new List<CalculationParameter>();
-            CalculationParameter Params = new CalculationParameter();
-            Params.Cb=Int32.Parse(Cb_Text.Text);
-            Params.Delta = Int32.Parse(Delta_Text.Text);
-            Params.B = Int32.Parse(B_Text.Text);
-            Params.L = Int32.Parse(L_Text.Text);
-            Params.T = Int32.Parse(T_Text.Text);
-
-            Calculator calculator = new Calculator();
-            calculatedParams=calculator.Delta(Params);
-            calculator.Cb(ref calculatedParams, Params);
-
-            foreach (var item in calculatedParams)
-            {
-                item.L = Params.L;
-                item.T = Params.T;
-                item.B = Params.B;
-            }
-            Utilities.WriteText(calculatedParams, pathCalculation);
+            CalculationManager calculationManager = new CalculationManager(new CbCalculator(), new DeltaCalculator());
+            var result = calculationManager.CalculateAndPrint(T_Text.Text, B_Text.Text, L_Text.Text, Cb_Text.Text, Delta_Text.Text, pathCalculation);
+            MessageBox.Show(result.Message);
         }
 
 
         private void NavBar_button3_Click(object sender, RoutedEventArgs e)   //Display calculation
         {
-            Utilities.DisplayFile(pathCalculation, ListBox); ;
+            FileManagement fileIOManagement = new FileManagement(new OpenFileDialogClass(), new StreamReaderClass());
+            var result = fileIOManagement.DisplayFile(pathCalculation, ListBox);
         }
 
         private void NavBar_button4_Click(object sender, RoutedEventArgs e)   //Display Log
         {
-            Utilities.DisplayFile(pathLog, ListBox);
+            FileManagement fileIOManagement = new FileManagement(new OpenFileDialogClass(), new StreamReaderClass());
+            var result = fileIOManagement.DisplayFile(pathLog, ListBox);
+
         }
-
-
 
         private void NavBar_button2_Click(object sender, RoutedEventArgs e)  //Log direction selection
         {
-            OpenFileDialogClass openFileDialogClass = new OpenFileDialogClass();
-            var path= openFileDialogClass.FileSelection("txt | *.txt");
-            if (path!=null)
-            {
-                pathLog = path;
-            }
-            
-        }
+            FileManagement fileIOManagement = new FileManagement(new OpenFileDialogClass(),new StreamReaderClass());
+            var result = fileIOManagement.FileSelection("txt | *.txt");
+            if (result.Result)
+                pathLog = result.Data;
+            else
+                MessageBox.Show(result.Message);
 
+        }
 
         private void controlbtn_Click(object sender, RoutedEventArgs e)   //Calculation direction
         {
-            OpenFileDialogClass openFileDialogClass = new OpenFileDialogClass();
-            var path = openFileDialogClass.FileSelection("txt | *.txt");
-            if (path != null)
-            {
-                pathCalculation = path;
-            }
-
+            FileManagement fileIOManagement = new FileManagement(new OpenFileDialogClass(), new StreamReaderClass());
+            var result = fileIOManagement.FileSelection("txt | *.txt");
+            if (result.Result)
+                pathCalculation = result.Data;
+            else
+                MessageBox.Show(result.Message);
         }
 
 
-        public void Logger()
+        private void Cb_Text_TextChanged(object sender, KeyEventArgs e)
+       {
+            CalculationManager calculationManager = new CalculationManager(new CbCalculator(), new DeltaCalculator());
+            var result=calculationManager.CalculateDelta(T_Text.Text, B_Text.Text, L_Text.Text, Cb_Text.Text);
+            if (result.Result)
+                Delta_Text.Text =(result.Data).ToString();     
+            else
+                MessageBox.Show(result.Message);        
+        }
+
+        private void Delta_Text_TextChanged(object sender, KeyEventArgs e)
         {
-
+            CalculationManager calculationManager = new CalculationManager(new CbCalculator(), new DeltaCalculator());
+            var result = calculationManager.CalculateCb(T_Text.Text, B_Text.Text, L_Text.Text, Delta_Text.Text);
+            if (result.Result)
+                Cb_Text.Text = (result.Data).ToString();
+            else
+                MessageBox.Show(result.Message);
         }
 
+        private void B_Text_KeyUp(object sender, KeyEventArgs e)
+        {
+            CalculationManager calculationManager = new CalculationManager(new CbCalculator(), new DeltaCalculator());
+            var result = calculationManager.CalculateDelta(T_Text.Text, B_Text.Text, L_Text.Text, Cb_Text.Text);
+            if (result.Result)
+                Delta_Text.Text = (result.Data).ToString();
+            else
+                MessageBox.Show(result.Message);
+        }
+
+        private void L_Text_KeyUp(object sender, KeyEventArgs e)
+        {
+            CalculationManager calculationManager = new CalculationManager(new CbCalculator(), new DeltaCalculator());
+            var result = calculationManager.CalculateDelta(T_Text.Text, B_Text.Text, L_Text.Text, Cb_Text.Text);
+            if (result.Result)
+                Delta_Text.Text = (result.Data).ToString();
+            else
+                MessageBox.Show(result.Message);
+        }
+
+        private void T_Text_KeyUp(object sender, KeyEventArgs e)
+        {
+            CalculationManager calculationManager = new CalculationManager(new CbCalculator(), new DeltaCalculator());
+            var result = calculationManager.CalculateDelta(T_Text.Text, B_Text.Text, L_Text.Text, Cb_Text.Text);
+            if (result.Result)
+                Delta_Text.Text = (result.Data).ToString();
+            else
+                MessageBox.Show(result.Message);
+        }
     }
+
+
 }
 

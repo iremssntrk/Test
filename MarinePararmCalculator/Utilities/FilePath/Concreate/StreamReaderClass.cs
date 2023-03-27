@@ -1,4 +1,6 @@
 ﻿using MarinePararmCalculator.Entities;
+using MarinePararmCalculator.Utilities.Error;
+using MarinePararmCalculator.Utilities.FilePath.Abstract;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -7,11 +9,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 
-namespace MarinePararmCalculator
+namespace MarinePararmCalculator.Utilities
 {
-    public static class Utilities
+    public class StreamReaderClass: IFileSelection
     {
-        public static void DisplayFile(string path, ListBox ListBox)
+        public IResult DisplayFile(string path, ListBox ListBox)
         {
             String line;
             ListBox.Items.Clear();
@@ -24,21 +26,20 @@ namespace MarinePararmCalculator
             }
             //close the file
             sr.Close();
+            return new Result(true);
         }
 
-
-
-        public static void WriteText(List<CalculationParameter> calculatedParams, string Path)
+        public IResult WriteFile(List<Parameter> calculatedParams, string Path)
         {
-            StreamWriter writer;
+            System.IO.StreamWriter writer;
             writer = File.CreateText(Path);
-            writer.WriteLine($"{"[B]",-11:f} {"[L]",-11:f} {"[T]",-11:f} {"[Cb]",-11:f} {"[Δ]",-11:f} ");
-            foreach (CalculationParameter param in calculatedParams)
+            writer.WriteLine($"{"[B]",-12:f} {"[L]",-14:f} {"[T]",-13:f} {"[Cb]",-13:f} {"[Δ]",-30:f} ");
+            foreach (Parameter param in calculatedParams)
             {
                 writer.WriteLine($"{param.B,-11:f} {param.L,-11:f} {param.T,-11:f} {param.Cb.ToString("0.00"),-11:f} {param.Delta.ToString("0.00"),-11:f} ");
             }
             writer.Close();
-
+            return new Result(true);
         }
     }
 }
