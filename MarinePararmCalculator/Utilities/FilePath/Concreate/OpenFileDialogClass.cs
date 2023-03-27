@@ -21,7 +21,7 @@ namespace MarinePararmCalculator.FilePath
                     
             }
 
-            return new DataResult<string>(false, "Dosya adresi bulunamadı");
+            return new DataResult<string>(false, MessageString.NoFile);
         }
 
     }

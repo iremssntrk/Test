@@ -34,7 +34,7 @@ namespace MarinePararmCalculator.Calculation
                 Cb = _cbCalculator.Calculate(T, B, L, Delta);
                 return new DataResult<double>(Cb, true);
             }
-            return new DataResult<double>(false, "Alanları doldurun");
+            return new DataResult<double>(false, MessageString.EmptyField);
         }
 
         public IDataResult<double> CalculateDelta(string T_string, string B_string, string L_string, string Cb_string)
@@ -49,7 +49,7 @@ namespace MarinePararmCalculator.Calculation
                 Delta = _deltaCalculator.Calculate(T, B, L, Cb);
                 return new DataResult<double>(Delta, true);
             }
-            return new DataResult<double>(false, "Alanları doldurun");
+            return new DataResult<double>(false, MessageString.EmptyField);
         }
 
         public IDataResult<List<Parameter>> CalculateAndPrint(string T_string, string B_string, string L_string, string Cb_string, string Delta_string, string pathCalculation)
@@ -80,11 +80,11 @@ namespace MarinePararmCalculator.Calculation
                     item.L = L;
 
                 }
-                FileManagement fileIOManagement = new FileManagement(new OpenFileDialogClass(), new StreamReaderClass());
+                var fileIOManagement = new FileManagement(new OpenFileDialogClass(), new StreamReaderClass());
                 fileIOManagement.WriteFile(calculatedParams, pathCalculation);
-                return new DataResult<List<Parameter>>(calculatedParams, true, "çıktı alındı");
+                return new DataResult<List<Parameter>>(calculatedParams, true, MessageString.PrintOK);
             }
-            return new DataResult<List<Parameter>>(false, "Alanları doldurun");
+            return new DataResult<List<Parameter>>(false, MessageString.EmptyField);
         }
 
 

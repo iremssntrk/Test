@@ -62,6 +62,7 @@
     <Compile Include="Calculation\ParameterCalculation\Abstract\IDeltaCalculator.cs" />
     <Compile Include="Entities\Parameter.cs" />
     <Compile Include="Utilities\Error\DataResult.cs" />
+    <Compile Include="Utilities\Error\MessageString.cs" />
     <Compile Include="Utilities\Error\IDataResult.cs" />
     <Compile Include="Utilities\Error\IResult.cs" />
     <Compile Include="Utilities\Error\Result.cs" />
