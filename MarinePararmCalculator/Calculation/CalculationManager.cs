@@ -16,8 +16,10 @@ namespace MarinePararmCalculator.Calculation
     {
         ICbCalculator _cbCalculator;
         IDeltaCalculator _deltaCalculator;
-        public CalculationManager(ICbCalculator cbCalculator,IDeltaCalculator deltaCalculator)
+        Parameter Model { get; set; }
+        public CalculationManager(Parameter model, ICbCalculator cbCalculator,IDeltaCalculator deltaCalculator)
         {
+            Model = model;
             _cbCalculator = cbCalculator; 
             _deltaCalculator=deltaCalculator; 
         }
