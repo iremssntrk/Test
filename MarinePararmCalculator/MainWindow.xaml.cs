@@ -22,6 +22,7 @@ using MarinePararmCalculator.Calculation;
 using MarinePararmCalculator.Utilities;
 using System.Runtime.Remoting.Contexts;
 using MarinePararmCalculator.Utilities.FilePath;
+using MarinePararmCalculator.Utilities.Error;
 
 namespace MarineParamCalculator
 {
@@ -30,86 +31,115 @@ namespace MarineParamCalculator
     /// </summary>
     public partial class MainWindow : Window
     {
-        string pathCalculation;
-        string pathLog;
+        string settedPathForCalculation;
+        string settedPathForLog;
+        FileManagement fileIOManagement;
         Parameter Model { get; set; }
         CalculationManager calculationManager { get; set; }
         public MainWindow()
         {
+            fileIOManagement = new FileManagement(new OpenFileDialogClass(), new StreamRWClass());
             Model = new Parameter();
             calculationManager = new CalculationManager(Model, new CbCalculator(), new DeltaCalculator());
             InitializeComponent();
         }
 
         private void Grid_Loaded(object sender, RoutedEventArgs e)
-        {
-            
+        {        
             string directory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop); ;   //default location
-            pathCalculation = System.IO.Path.Combine(directory, "calc.txt");
-            pathLog = System.IO.Path.Combine(directory, "log.txt");
+            settedPathForCalculation = System.IO.Path.Combine(directory, "calc.txt");
+            settedPathForLog = System.IO.Path.Combine(directory, "log.txt");
         }
 
 
         private void CalculateButtonClick(object sender, RoutedEventArgs e)
         {
-            var result = calculationManager.CalculateAndPrint(T_Text.Text, B_Text.Text, L_Text.Text, Cb_Text.Text, Delta_Text.Text, pathCalculation);
+            var result = calculationManager.CalculateAndPrint(settedPathForCalculation, settedPathForLog);
             MessageBox.Show(result.Message);
         }
 
 
         private void NavBar_button3_Click(object sender, RoutedEventArgs e)   //Display calculation
         {
-            FileManagement fileIOManagement = new FileManagement(new OpenFileDialogClass(), new StreamReaderClass());
-            var result = fileIOManagement.DisplayFile(pathCalculation, ListBox);
+            var result = fileIOManagement.DisplayFile(settedPathForCalculation, ListBox);
         }
 
         private void NavBar_button4_Click(object sender, RoutedEventArgs e)   //Display Log
         {
-            FileManagement fileIOManagement = new FileManagement(new OpenFileDialogClass(), new StreamReaderClass());
-            var result = fileIOManagement.DisplayFile(pathLog, ListBox);
+            var result = fileIOManagement.DisplayFile(settedPathForLog, ListBox);
 
         }
 
         private void NavBar_button2_Click(object sender, RoutedEventArgs e)  //Log direction selection
         {
-            FileManagement fileIOManagement = new FileManagement(new OpenFileDialogClass(), new StreamReaderClass());
             var result = fileIOManagement.FileSelection("txt | *.txt");
             if (result.Result)
-                pathLog = result.Data;
+            {
+                fileIOManagement.LogToFile(MessageString.LogFilePathChanged, settedPathForLog);
+                settedPathForLog = result.Data;
+            }
             else
+            {
+                fileIOManagement.LogToFile(result.Message, settedPathForLog);
                 MessageBox.Show(result.Message);
+            }
+                
 
         }
 
         private void controlbtn_Click(object sender, RoutedEventArgs e)   //Calculation direction
         {
-            FileManagement fileIOManagement = new FileManagement(new OpenFileDialogClass(), new StreamReaderClass());
             var result = fileIOManagement.FileSelection("txt | *.txt");
             if (result.Result)
-                pathCalculation = result.Data;
+            {
+                fileIOManagement.LogToFile(MessageString.CalculationFilePathChanged, settedPathForLog);
+                settedPathForCalculation = result.Data;
+            }     
             else
+            {
+                fileIOManagement.LogToFile(result.Message, settedPathForLog);
                 MessageBox.Show(result.Message);
+            }
+                
         }
 
 
         private void Cb_Text_TextChanged(object sender, KeyEventArgs e)
         {
-            var result = calculationManager.CalculateDelta(T_Text.Text, B_Text.Text, L_Text.Text, Cb_Text.Text);
-            if (result.Result)
-                Delta_Text.Text = (result.Data).ToString();
+            double parsedValue;
+            bool isParsed = double.TryParse(Cb_Text.Text, out parsedValue);
+            if (isParsed)
+            {
+                Model.Cb = parsedValue;
+                var result = calculationManager.CalculateDelta();
+                if (result.Result)
+                {
+                    Delta_Text.Text = (result.Data).ToString();
+                    Model.Delta = result.Data;
+                }
+                else
+                    MessageBox.Show(result.Message);
+            }
             else
-                MessageBox.Show(result.Message);
+            {
+                Cb_Text.Text = "0";
+            }
+             
         }
 
         private void Delta_Text_TextChanged(object sender, KeyEventArgs e)
         {
             double parsedValue;
-            bool isParsed = double.TryParse(L_Text.Text, out parsedValue);
+            bool isParsed = double.TryParse(Delta_Text.Text, out parsedValue);
             if (isParsed)
             {
-                var result = calculationManager.CalculateCb(T_Text.Text, B_Text.Text, L_Text.Text, Delta_Text.Text);
+                Model.Delta= parsedValue;
+                var result = calculationManager.CalculateCb();
                 if (result.Result)
+                {
                     Cb_Text.Text = (result.Data).ToString();
+                    Model.Cb = result.Data;
+                }      
                 else
                     MessageBox.Show(result.Message);
             }
@@ -126,7 +156,7 @@ namespace MarineParamCalculator
             if (isParsed)
             {
                 Model.B = parsedValue;
-                var result = calculationManager.CalculateDelta(T_Text.Text, B_Text.Text, L_Text.Text, Cb_Text.Text);
+                var result = calculationManager.CalculateDelta();
                 if (result.Result)
                     Delta_Text.Text = (result.Data).ToString();
                 else
@@ -145,7 +175,7 @@ namespace MarineParamCalculator
             if (isParsed)
             {
                 Model.L = parsedValue;
-                var result = calculationManager.CalculateDelta(T_Text.Text, B_Text.Text, L_Text.Text, Cb_Text.Text);
+                var result = calculationManager.CalculateDelta();
                 if (result.Result)
                     Delta_Text.Text = (result.Data).ToString();
                 else
@@ -164,7 +194,7 @@ namespace MarineParamCalculator
             if (isParsed)
             {
                 Model.T = parsedValue;
-                var result = calculationManager.CalculateDelta(T_Text.Text, B_Text.Text, L_Text.Text, Cb_Text.Text);
+                var result = calculationManager.CalculateDelta();
                 if (result.Result)
                     Delta_Text.Text = (result.Data).ToString();
                 else

@@ -13,6 +13,8 @@ namespace MarinePararmCalculator.Utilities.FilePath.Abstract
     {
         IResult DisplayFile(string path, ListBox ListBox);
 
-        IResult WriteFile(List<Parameter> calculatedParams, string Path);
+        IResult WriteFile(string message, string Path);
+
+        void ClearFile(string Path);
     }
 }

@@ -68,7 +68,7 @@
     <Compile Include="Utilities\Error\Result.cs" />
     <Compile Include="Utilities\FilePath\Abstract\IFileSelection.cs" />
     <Compile Include="Utilities\FileManagement.cs" />
-    <Compile Include="Utilities\FilePath\Concreate\StreamReaderClass.cs" />
+    <Compile Include="Utilities\FilePath\Concreate\StreamRWClass.cs" />
     <Compile Include="Utilities\InputFormat.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
