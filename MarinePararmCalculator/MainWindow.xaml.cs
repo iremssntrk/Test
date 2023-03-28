@@ -2,7 +2,6 @@
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,10 +15,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Drawing;
-using System.IO;
-using static System.Net.Mime.MediaTypeNames;
-
-
+using MarinePararmCalculator.FilePath;
+using MarinePararmCalculator;
+using MarinePararmCalculator.Entities;
+using MarinePararmCalculator.Calculation;
+using MarinePararmCalculator.Utilities;
+using System.Runtime.Remoting.Contexts;
+using MarinePararmCalculator.Utilities.FilePath;
+using MarinePararmCalculator.Utilities.Error;
 
 namespace MarineParamCalculator
 {
@@ -28,105 +31,182 @@ namespace MarineParamCalculator
     /// </summary>
     public partial class MainWindow : Window
     {
-        string pathCalculation;
-        string pathLog;
-        StreamWriter writer;
+        string settedPathForCalculation;
+        string settedPathForLog;
+        FileManagement fileIOManagement;
+        Parameter Model { get; set; }
+        CalculationManager calculationManager { get; set; }
         public MainWindow()
         {
+            fileIOManagement = new FileManagement(new OpenFileDialogClass(), new StreamRWClass());
+            Model = new Parameter();
+            calculationManager = new CalculationManager(Model, new CbCalculator(), new DeltaCalculator());
             InitializeComponent();
         }
 
         private void Grid_Loaded(object sender, RoutedEventArgs e)
-        {
-
-            string directory = "C:\\Users\\isenturk\\Desktop";   //default location
-            pathCalculation = System.IO.Path.Combine(directory, "calc.txt");
-            writer = File.CreateText(pathCalculation);
+        {        
+            string directory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop); ;   //default location
+            settedPathForCalculation = System.IO.Path.Combine(directory, "calc.txt");
+            settedPathForLog = System.IO.Path.Combine(directory, "log.txt");
         }
 
 
-        private void ButtonClick(object sender, RoutedEventArgs e)
+        private void CalculateButtonClick(object sender, RoutedEventArgs e)
         {
-            List<double> Cbs = new List<double>();
-            List<double> Deltas = new List<double>();
-            writer.Close();
-            writer = File.CreateText(pathCalculation);
-            int Delta_m;
-            //Calculation delta 
-            for (int i = 0; i < 6; i++)
-            {
-                if (int.TryParse(Delta_Text.Text, out Delta_m))
-                    Deltas.Add(Delta_m * i / 5);
-            }
-            foreach (var delta in Deltas)
-            {
-                if (delta != 0)
-                {
-                    Cbs.Add(int.Parse(B_Text.Text) * int.Parse(L_Text.Text) * int.Parse(T_Text.Text) / delta);
-                }
-                else
-                {
-                    Cbs.Add(0);
-                }
-            }
-
-            Write($"{"[B]",-11:f} {"[L]",-11:f} {"[T]",-11:f} {"[Cb]",-11:f} {"[Δ]",-11:f} ");
-
-            for (int i = 0; i < 6; i++)
-            {         
-             Write($"{B_Text.Text,-11:f} {L_Text.Text,-11:f} {T_Text.Text,-11:f} {Cbs[i].ToString("0.00"),-11:f} {Deltas[i].ToString("0.00"),-11:f} ");
-            }
-
-
-            writer.Close();
-
+            var result = calculationManager.CalculateAndPrint(settedPathForCalculation, settedPathForLog);
+            MessageBox.Show(result.Message);
         }
 
-        public void Write(string text)
-        {
-            writer.WriteLine(text);
-        }
-
-
-
-
-        private void controlbtn_Click(object sender, RoutedEventArgs e)   
-        {
-            var filedialog = new OpenFileDialog();
-            filedialog.Filter = "txt | *.txt";
-            if (filedialog.ShowDialog() == true)
-            {
-                pathCalculation = filedialog.FileName;
-            }
-
-        }
 
         private void NavBar_button3_Click(object sender, RoutedEventArgs e)   //Display calculation
         {
-            pathCalculation = pathCalculation;
-            DisplayFile(pathCalculation);
+            var result = fileIOManagement.DisplayFile(settedPathForCalculation, ListBox);
         }
 
         private void NavBar_button4_Click(object sender, RoutedEventArgs e)   //Display Log
         {
-            pathLog = pathLog;
-            DisplayFile(pathLog);
+            var result = fileIOManagement.DisplayFile(settedPathForLog, ListBox);
+
         }
 
-        public void DisplayFile(string path)
+        private void NavBar_button2_Click(object sender, RoutedEventArgs e)  //Log direction selection
         {
-            String line;
-            ListBox.Items.Clear();
-            StreamReader sr = new StreamReader(path);
-            line = sr.ReadLine();
-            while (line != null)
+            var result = fileIOManagement.FileSelection("txt | *.txt");
+            if (result.Result)
             {
-                ListBox.Items.Add(line);
-                line = sr.ReadLine();
+                fileIOManagement.LogToFile(MessageString.LogFilePathChanged, settedPathForLog);
+                settedPathForLog = result.Data;
             }
-            //close the file
-            sr.Close();
+            else
+            {
+                fileIOManagement.LogToFile(result.Message, settedPathForLog);
+                MessageBox.Show(result.Message);
+            }
+                
+
+        }
+
+        private void controlbtn_Click(object sender, RoutedEventArgs e)   //Calculation direction
+        {
+            var result = fileIOManagement.FileSelection("txt | *.txt");
+            if (result.Result)
+            {
+                fileIOManagement.LogToFile(MessageString.CalculationFilePathChanged, settedPathForLog);
+                settedPathForCalculation = result.Data;
+            }     
+            else
+            {
+                fileIOManagement.LogToFile(result.Message, settedPathForLog);
+                MessageBox.Show(result.Message);
+            }
+                
+        }
+
+
+        private void Cb_Text_TextChanged(object sender, KeyEventArgs e)
+        {
+            double parsedValue;
+            bool isParsed = double.TryParse(Cb_Text.Text, out parsedValue);
+            if (isParsed)
+            {
+                Model.Cb = parsedValue;
+                var result = calculationManager.CalculateDelta();
+                if (result.Result)
+                {
+                    Delta_Text.Text = (result.Data).ToString();
+                    Model.Delta = result.Data;
+                }
+                else
+                    MessageBox.Show(result.Message);
+            }
+            else
+            {
+                Cb_Text.Text = "0";
+            }
+             
+        }
+
+        private void Delta_Text_TextChanged(object sender, KeyEventArgs e)
+        {
+            double parsedValue;
+            bool isParsed = double.TryParse(Delta_Text.Text, out parsedValue);
+            if (isParsed)
+            {
+                Model.Delta= parsedValue;
+                var result = calculationManager.CalculateCb();
+                if (result.Result)
+                {
+                    Cb_Text.Text = (result.Data).ToString();
+                    Model.Cb = result.Data;
+                }      
+                else
+                    MessageBox.Show(result.Message);
+            }
+            else
+            {
+                Delta_Text.Text = "0";
+            }
+        }
+
+        private void B_Text_KeyUp(object sender, KeyEventArgs e)
+        {
+            double parsedValue;
+            bool isParsed = double.TryParse(B_Text.Text, out parsedValue);
+            if (isParsed)
+            {
+                Model.B = parsedValue;
+                var result = calculationManager.CalculateDelta();
+                if (result.Result)
+                    Delta_Text.Text = (result.Data).ToString();
+                else
+                    MessageBox.Show(result.Message);
+            }
+            else
+            {
+                B_Text.Text = "0";
+            }
+        }
+
+        private void L_Text_KeyUp(object sender, KeyEventArgs e)
+        {
+            double parsedValue;
+            bool isParsed = double.TryParse(L_Text.Text, out parsedValue);
+            if (isParsed)
+            {
+                Model.L = parsedValue;
+                var result = calculationManager.CalculateDelta();
+                if (result.Result)
+                    Delta_Text.Text = (result.Data).ToString();
+                else
+                    MessageBox.Show(result.Message);
+            }
+            else
+            {
+                L_Text.Text = "0";
+            }
+        }
+
+        private void T_Text_KeyUp(object sender, KeyEventArgs e)
+        {
+            double parsedValue;
+            bool isParsed = double.TryParse(T_Text.Text, out parsedValue);
+            if (isParsed)
+            {
+                Model.T = parsedValue;
+                var result = calculationManager.CalculateDelta();
+                if (result.Result)
+                    Delta_Text.Text = (result.Data).ToString();
+                else
+                    MessageBox.Show(result.Message);
+            }
+            else
+            {
+                T_Text.Text = "0";
+            }
         }
     }
+
+
 }
 

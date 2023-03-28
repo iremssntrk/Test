@@ -28,7 +28,7 @@ namespace FileOpen
             foreach (var item in Directory.GetFiles(@"C:\Users\isenturk\Desktop"))
             {
                 comboBox2.Items.Add(item);
-                paths[counter] = item;
+                //paths[counter] = item;
                 counter = counter + 1;
             }
         }
