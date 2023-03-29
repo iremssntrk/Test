@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FemMeshDrawingFromFile"
         xmlns:ddes="http://schemas.devdept.com/winfx/2008/xaml/control" xmlns:ddgr="http://schemas.devdept.com/winfx/2008/xaml/graphics" x:Class="MainWindow"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"    
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
@@ -64,6 +65,7 @@
         </ddes:Simulation>
         <StackPanel Grid.Column="1">
             <Button Grid.Column="1" Height="50" Content="Translate" Click="Button_Click" />
+            <xctk:PropertyGrid x:Name="ObjectPropertyGrid" ShowSearchBox="True" Margin="0,50,0,0" Height="300"/>
         </StackPanel>
 
     </Grid>
