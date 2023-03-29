@@ -101,8 +101,10 @@
       <DependentUpon>Application.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Draw\SimulationEntity.vb" />
     <Compile Include="Draw\SimulationClass.vb" />
     <Compile Include="Draw\Translate.vb" />
+    <Compile Include="Entity\Panel.vb" />
     <Compile Include="File\FileSelect.vb" />
     <Compile Include="File\StreamRW.vb" />
     <Compile Include="MainWindow.xaml.vb">

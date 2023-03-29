@@ -22,9 +22,9 @@ Public Class SimulationClass
         Dim count2 As Integer
         Dim NoOfVertices As Integer
         Dim NoOfElement As Integer
+        Dim Name As String
         Dim streamClass As StreamRW = New StreamRW()
         Dim translate As Translate = New Translate()
-
 
         Dim triangles As List(Of Element)
         Dim vertices As List(Of Point3D)
@@ -37,6 +37,7 @@ Public Class SimulationClass
                 istep = 0
                 count2 = 0
             End If
+
             If (istep = 2) And (count < NoOfElement) Then
                 translate.SumTriangles(Mat, item, triangles)
                 count = count + 1
@@ -44,11 +45,14 @@ Public Class SimulationClass
                 istep = 0
                 count = 0
                 Dim mesh As FemMesh = New FemMesh(vertices, triangles)
+                Dim panel As Panel = New Panel()
+                panel.Name = Name
+                panel.Elements = NoOfElement
+                panel.Vertices = NoOfVertices
+                mesh.EntityData = panel
                 mesh.ColorMethod = colorMethodType.byEntity
                 _model.Entities.Add(mesh)
             End If
-
-
             If item.Contains("elements:") Then
                 triangles = New List(Of Element)
                 Dim ForSplit = Split(item, " ")
@@ -60,8 +64,13 @@ Public Class SimulationClass
                 Integer.TryParse(ForSplit(1), NoOfVertices)
                 istep = 1
             End If
+            If (istep = 0) Then
+                Name = item
+            End If
+
         Next
         _model.Invalidate()
+
 
     End Sub
 End Class
