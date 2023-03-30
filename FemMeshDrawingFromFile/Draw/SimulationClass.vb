@@ -17,7 +17,7 @@ Public Class SimulationClass
 
     Public Event ProgressChanged(current_val As Integer)
 
-    Function Simulate(path As String, mw As MainWindow) As List(Of Entity)
+    Function Simulate(path As String, mw As MainWindow, xMin As Double, xMax As Double) As List(Of Entity)
         Dim entities = New List(Of Entity)
         Dim istep As Integer
         Dim Mat As Material = New Material("steel")
@@ -43,7 +43,7 @@ Public Class SimulationClass
             End If
 
             If (istep = 2) And (count < NoOfElement) Then
-                translate.SumTriangles(Mat, item, triangles)
+                translate.SumTriangles(Mat, item, triangles, vertices, xMin, xMax)
                 count = count + 1
             ElseIf (istep = 2) And (count = NoOfElement) Then
                 istep = 0
@@ -55,7 +55,6 @@ Public Class SimulationClass
                 panel.Vertices = NoOfVertices
                 mesh.EntityData = panel
                 mesh.ColorMethod = colorMethodType.byEntity
-                '_model.Entities.Add(mesh)
                 entities.Add(mesh)
                 NumberOfPanel = NumberOfPanel + 1
                 Thread.Sleep(2)

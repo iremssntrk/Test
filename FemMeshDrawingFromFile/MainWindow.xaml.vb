@@ -18,23 +18,38 @@ Class MainWindow
     Dim simulation As SimulationClass
     Dim simulationEntity As SimulationEntity
     Dim _path As String
+    Dim verticeClass As VerticeClass
+    Dim findPoint As FindPoint
+
     Public Sub New()
         InitializeComponent()
         fileSelect = New FileSelect()
         simulation = New SimulationClass(sim1)
-
+        verticeClass = New VerticeClass()
+        findPoint = New FindPoint()
         AddHandler simulation.ProgressChanged, AddressOf ProgressUpdate
 
         simulationEntity = New SimulationEntity()
+
     End Sub
 
 
     Private Async Sub Button_Click(sender As Object, e As RoutedEventArgs)
         _path = fileSelect.OpenFile()
+        Dim vertices = New List(Of Point3D)
+        verticeClass.FindAll(_path, vertices)
+
+
+
+        Dim xMin = findPoint.PointXMin(vertices)
+        Dim xMax = findPoint.PointXMax(vertices)
+
+
+
 
         Dim entities As List(Of Entity)
         Dim thread_pars = New ThreadStart(Sub()
-                                              entities = simulation.Simulate(_path, Me)
+                                              entities = simulation.Simulate(_path, Me, xMin, xMax)
 
                                               Application.Current.Dispatcher.Invoke(
                                                 New Action(
@@ -83,6 +98,11 @@ Class MainWindow
     Private Sub Button_Click2(sender As Object, e As RoutedEventArgs)
         ProceedProgressBar()
     End Sub
+
+
+
 End Class
+
+
 
 
