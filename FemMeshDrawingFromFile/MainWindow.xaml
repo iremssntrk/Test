@@ -65,7 +65,9 @@
         </ddes:Simulation>
         <StackPanel Grid.Column="1">
             <Button Grid.Column="1" Height="50" Content="Translate" Click="Button_Click" />
-            <xctk:PropertyGrid x:Name="ObjectPropertyGrid" ShowSearchBox="True" Margin="0,50,0,0" Height="300"/>
+            <Button Grid.Column="1" Height="50" Content="Progress" Click="Button_Click2" />
+            <xctk:PropertyGrid x:Name="ObjectPropertyGrid" ShowSearchBox="True" Margin="0,50,0,0" Height="236"/>
+        <ProgressBar Height="30" x:Name="ProgressBar"/>
         </StackPanel>
 
     </Grid>

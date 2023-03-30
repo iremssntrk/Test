@@ -23,7 +23,7 @@ Public Class Translate
         vertices.Add(v)
     End Sub
 
-    Sub SumTriangles(Mat As Material, item As String, triangles As List(Of Element))
+    Sub SumTriangles(Mat As Material, item As String, triangles As List(Of Element), vertices As List(Of Point3D))
         Dim element As List(Of Integer) = New List(Of Integer)
         Dim temp As Integer
         Dim tArray() As String
@@ -33,14 +33,19 @@ Public Class Translate
             element.Add(temp)
         Next k
         If (element.Count) = 4 Then
-            SumOfQuads(Mat, triangles, element)
+            SumOfQuads(Mat, triangles, element, vertices)
         ElseIf (element.Count) = 3 Then
             SumOfTrias(Mat, triangles, element)
         End If
 
     End Sub
 
-    Sub SumOfQuads(mat As Material, triangles As List(Of Element), Element As List(Of Integer))
+    Sub SumOfQuads(mat As Material, triangles As List(Of Element), Element As List(Of Integer), vertices As List(Of Point3D))
+        Dim p1 = vertices(Element(0))
+        Dim p2 = vertices(Element(1))
+        Dim p3 = vertices(Element(2))
+        Dim p4 = vertices(Element(3))
+        Dim center = (p1 + p2 + p3 + p4) / 4
         Dim quad = New Quad4(Element(0), Element(1), Element(2), Element(3), mat)
         triangles.Add(quad)
     End Sub

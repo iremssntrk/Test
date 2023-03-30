@@ -5,6 +5,7 @@ Imports devDept.Geometry
 Imports devDept.Geometry.Entities
 Imports devDept.Graphics
 Imports devDept.Eyeshot
+Imports System.Threading
 
 Public Class SimulationClass
     Dim _model As Simulation
@@ -12,9 +13,12 @@ Public Class SimulationClass
         _model = model
         _model.ActionMode = devDept.Eyeshot.actionType.SelectVisibleByPick
     End Sub
+    Public NumberOfPanel As Integer
 
+    Public Event ProgressChanged(current_val As Integer)
 
-    Sub Simulate(path As String)
+    Function Simulate(path As String, mw As MainWindow) As List(Of Entity)
+        Dim entities = New List(Of Entity)
         Dim istep As Integer
         Dim Mat As Material = New Material("steel")
         Dim element As List(Of Integer) = New List(Of Integer)
@@ -51,7 +55,11 @@ Public Class SimulationClass
                 panel.Vertices = NoOfVertices
                 mesh.EntityData = panel
                 mesh.ColorMethod = colorMethodType.byEntity
-                _model.Entities.Add(mesh)
+                '_model.Entities.Add(mesh)
+                entities.Add(mesh)
+                NumberOfPanel = NumberOfPanel + 1
+                Thread.Sleep(2)
+                RaiseEvent ProgressChanged(NumberOfPanel)
             End If
             If item.Contains("elements:") Then
                 triangles = New List(Of Element)
@@ -69,8 +77,8 @@ Public Class SimulationClass
             End If
 
         Next
-        _model.Invalidate()
+        '_model.Invalidate()
 
-
-    End Sub
+        Return entities
+    End Function
 End Class
