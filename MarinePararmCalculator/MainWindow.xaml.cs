@@ -83,8 +83,6 @@ namespace MarineParamCalculator
                 fileIOManagement.LogToFile(result.Message, settedPathForLog);
                 MessageBox.Show(result.Message);
             }
-                
-
         }
 
         private void controlbtn_Click(object sender, RoutedEventArgs e)   //Calculation direction
