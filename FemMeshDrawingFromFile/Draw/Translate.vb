@@ -42,7 +42,6 @@ Public Class Translate
     End Sub
 
     Sub SumOfQuads(mat As Material, triangles As List(Of Element), Element As List(Of Integer), vertices As List(Of Point3D), xMin As Double, xMax As Double)
-        ', Xmin As Integer, XMax As Integer
         Dim p1 As Point3D = New Point3D()
         Dim p2 As Point3D = New Point3D()
         Dim p3 As Point3D = New Point3D()
@@ -55,9 +54,7 @@ Public Class Translate
         center = (p1 + p2 + p3 + p4) / 4
         Dim color As System.Drawing.Color = New System.Drawing.Color()
 
-
-
-        color = CreateColorTable(center)(0)
+        color = CreateColorTable(center, xMin, xMax)(0)
         Dim mat2 As Material = New Material(color)
 
         Dim Quad = New Quad4(Element(0), Element(1), Element(2), Element(3), mat2)
@@ -70,9 +67,10 @@ Public Class Translate
     End Sub
 
 
-    Private Shared Function CreateColorTable(center As Point3D) As List(Of System.Drawing.Color)
+    Private Shared Function CreateColorTable(center As Point3D, xMin As Double, xMax As Double) As List(Of System.Drawing.Color)
         Dim colortable = New List(Of System.Drawing.Color)
         Dim alpha = 255
+        Dim Difference = xMax - xMin
         colortable.Add(System.Drawing.Color.FromArgb(alpha, center.X, 0, 255 - center.X))
         Return colortable
     End Function
