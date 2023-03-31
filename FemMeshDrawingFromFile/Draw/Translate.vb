@@ -9,10 +9,13 @@ Imports devDept.Geometry
 Imports devDept.Geometry.Entities
 Imports devDept.Graphics
 Imports Xceed.Wpf.Toolkit
-
+Imports System.Collections.Generic
 Public Class Translate
+    Public Sub New()
+        materialsDictionary = New Dictionary(Of System.Drawing.Color, Material)
+    End Sub
 
-
+    Dim materialsDictionary As Dictionary(Of System.Drawing.Color, Material)
 
     Sub SumVertices(vertices As List(Of Point3D), item As String)
         Dim tArray() As String
@@ -25,7 +28,7 @@ Public Class Translate
         vertices.Add(v)
     End Sub
 
-    Sub SumTriangles(Mat As Material, item As String, triangles As List(Of Element), vertices As List(Of Point3D), xMin As Double, xMax As Double)
+    Sub SumTriangles(item As String, triangles As List(Of Element), vertices As List(Of Point3D), xMin As Double, xMax As Double)
         Dim element As List(Of Integer) = New List(Of Integer)
         Dim temp As Integer
         Dim tArray() As String
@@ -43,15 +46,29 @@ Public Class Translate
     End Sub
 
     Sub SumOfQuads(triangles As List(Of Element), Elements As List(Of Integer), vertices As List(Of Point3D), xMin As Double, xMax As Double)
-        Dim mat As Material = New Material(FindMaterialColor(Elements, vertices, xMin, xMax))
+        Dim mat As Material
+        Dim materialColor = FindMaterialColor(Elements, vertices, xMin, xMax)
+        If materialsDictionary.ContainsKey(materialColor) Then
+            mat = materialsDictionary(materialColor)
+        Else
+            mat = New Material("Steel", materialColor)
+            materialsDictionary.Add(materialColor, mat)
+        End If
         Dim quad4Element As Quad4Element = New Quad4Element(Elements(0), Elements(1), Elements(2), Elements(3), mat, vertices)
         Dim center2 = quad4Element.Center
         triangles.Add(quad4Element)
     End Sub
 
     Sub SumOfTrias(triangles As List(Of Element), Element As List(Of Integer), vertices As List(Of Point3D), xMin As Double, xMax As Double)
-        Dim material As Material = New Material(FindMaterialColor(Element, vertices, xMin, xMax))
-        Dim tria3Element As Tria3Element = New Tria3Element(Element(0), Element(1), Element(2), material, vertices)
+        Dim mat As Material
+        Dim materialColor = FindMaterialColor(Element, vertices, xMin, xMax)
+        If materialsDictionary.ContainsKey(materialColor) Then
+            mat = materialsDictionary(materialColor)
+        Else
+            mat = New Material("Steel", materialColor)
+            materialsDictionary.Add(materialColor, mat)
+        End If
+        Dim tria3Element As Tria3Element = New Tria3Element(Element(0), Element(1), Element(2), mat, vertices)
         Dim center2 = tria3Element.Center
         triangles.Add(tria3Element)
     End Sub
@@ -70,30 +87,25 @@ Public Class Translate
         Return color
     End Function
 
+
+    '1024 renk
     Private Shared Function CreateColorTable()
         Dim colortable = New List(Of System.Windows.Media.Color)
         Dim alpha = 255
         For i = 0 To 255
             colortable.Add(System.Windows.Media.Color.FromArgb(alpha, 0, i, 255))
         Next
-
         For i = 1 To 255
             colortable.Add(System.Windows.Media.Color.FromArgb(alpha, 0, 255, 255 - i))
         Next
-
         For i = 1 To 255
             colortable.Add(System.Windows.Media.Color.FromArgb(alpha, i, 255, 0))
         Next
-
         For i = 1 To 255
             colortable.Add(System.Windows.Media.Color.FromArgb(alpha, 255, 255 - i, 0))
         Next
         Return colortable
     End Function
-
-
-
-
 
 End Class
 

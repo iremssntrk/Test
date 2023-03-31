@@ -6,7 +6,6 @@ Imports devDept.Graphics
 Public Class Quad4Element
     Inherits Quad4
     Implements IFemElement
-
     Dim _center As Point3D
     Public Sub New(nodeIndices As IEnumerable(Of Integer), mat As Material)
         MyBase.New(nodeIndices, mat)

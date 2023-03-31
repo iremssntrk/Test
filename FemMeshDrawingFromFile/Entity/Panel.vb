@@ -1,6 +1,5 @@
 ﻿Public Class Panel
 
-
     Private Name_x As String
     Public Property Name() As String
         Get

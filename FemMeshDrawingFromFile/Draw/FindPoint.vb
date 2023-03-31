@@ -30,7 +30,6 @@ Public Class FindPoint
         Next
         Return zMax
     End Function
-
     Function PointXMin(vertices As List(Of Point3D)) As Double
         Dim xMin = vertices(0).X
         For Each item In vertices
@@ -40,7 +39,6 @@ Public Class FindPoint
         Next
         Return xMin
     End Function
-
     Function PointYMin(vertices As List(Of Point3D)) As Double
         Dim yMin = vertices(0).Y
         For Each item In vertices
@@ -59,8 +57,6 @@ Public Class FindPoint
         Next
         Return zMin
     End Function
-
-
 End Class
 
 

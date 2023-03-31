@@ -101,7 +101,7 @@
       <DependentUpon>Application.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Draw\VerticeClass.vb" />
+    <Compile Include="Draw\FindFromEntireFile.vb" />
     <Compile Include="Draw\FindPoint.vb" />
     <Compile Include="Draw\SimulationEntity.vb" />
     <Compile Include="Draw\SimulationClass.vb" />

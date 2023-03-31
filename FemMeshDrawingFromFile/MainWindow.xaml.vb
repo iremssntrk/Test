@@ -18,39 +18,29 @@ Class MainWindow
     Dim simulation As SimulationClass
     Dim simulationEntity As SimulationEntity
     Dim _path As String
-    Dim verticeClass As VerticeClass
+    Dim findFromEntireFile As FindFromEntireFile
     Dim findPoint As FindPoint
 
     Public Sub New()
         InitializeComponent()
         fileSelect = New FileSelect()
         simulation = New SimulationClass(sim1)
-        verticeClass = New VerticeClass()
+        findFromEntireFile = New FindFromEntireFile()
         findPoint = New FindPoint()
         AddHandler simulation.ProgressChanged, AddressOf ProgressUpdate
-
         simulationEntity = New SimulationEntity()
-
     End Sub
 
 
     Private Async Sub Button_Click(sender As Object, e As RoutedEventArgs)
         _path = fileSelect.OpenFile()
         Dim vertices = New List(Of Point3D)
-        verticeClass.FindAll(_path, vertices)
-
-
-
+        findFromEntireFile.FindAllVertices(_path, vertices)
         Dim xMin = findPoint.PointXMin(vertices)
         Dim xMax = findPoint.PointXMax(vertices)
-
-
-
-
         Dim entities As List(Of Entity)
         Dim thread_pars = New ThreadStart(Sub()
                                               entities = simulation.Simulate(_path, Me, xMin, xMax)
-
                                               Application.Current.Dispatcher.Invoke(
                                                 New Action(
                                                 Sub()
@@ -58,14 +48,11 @@ Class MainWindow
                                                     sim1.Invalidate()
                                                     Dim legend = sim1.ActiveViewport.Legend
                                                     legend.SetRange(xMin, xMax)
-
                                                 End Sub))
                                           End Sub)
 
         Dim process = New Thread(thread_pars)
         process.Start()
-
-
         'Task.WaitAll(simulate_task)
 
         'Dim entities = simulate_task.Result
@@ -81,14 +68,6 @@ Class MainWindow
         ObjectPropertyGrid.SelectedObject = simulationEntity.FindPropertyOfSelected(sim1.Entities)
     End Sub
 
-    Public Sub ProceedProgressBar()
-        Application.Current.Dispatcher.Invoke(
-            New Action(
-            Sub()
-                ProgressBar.Value = (100 * simulation.NumberOfPanel) / 1942
-            End Sub))
-    End Sub
-
     Private Sub ProgressUpdate(current As Integer)
         ProgressBar.Dispatcher.BeginInvoke(
            Sub()
@@ -96,14 +75,6 @@ Class MainWindow
                ProgressBar.Value = (100 * simulation.NumberOfPanel) / 1942
            End Sub)
     End Sub
-
-
-    Private Sub Button_Click2(sender As Object, e As RoutedEventArgs)
-        ProceedProgressBar()
-    End Sub
-
-
-
 End Class
 
 
