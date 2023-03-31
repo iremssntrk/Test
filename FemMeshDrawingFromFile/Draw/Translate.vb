@@ -34,9 +34,9 @@ Public Class Translate
             element.Add(temp)
         Next k
         If (element.Count) = 4 Then
-            SumOfQuads(Mat, triangles, element, vertices, xMin, xMax)
+            SumOfQuads(triangles, element, vertices, xMin, xMax)
         ElseIf (element.Count) = 3 Then
-            SumOfTrias(Mat, triangles, element)
+            SumOfTrias(triangles, element, vertices, xMin, xMax)
         End If
 
     End Sub
@@ -61,8 +61,11 @@ Public Class Translate
         triangles.Add(Quad)
     End Sub
 
-    Sub SumOfTrias(mat As Material, triangles As List(Of Element), Element As List(Of Integer))
-        Dim tri1 As Tria3 = New Tria3(Element(0), Element(1), Element(2), mat)
+    Sub SumOfTrias(triangles As List(Of Element), Element As List(Of Integer), vertices As List(Of Point3D), xMin As Double, xMax As Double)
+
+
+        Dim material As Material = New Material(FindMeshColor(Element, vertices, xMin, xMax))
+        Dim tri1 As Tria3 = New Tria3(Element(0), Element(1), Element(2), material)
         triangles.Add(tri1)
     End Sub
 
@@ -74,33 +77,35 @@ Public Class Translate
         colortable.Add(System.Drawing.Color.FromArgb(alpha, center.X, 0, 255 - center.X))
         Return colortable
     End Function
+
+    Function FindMeshColor(Elements As List(Of Integer), vertices As List(Of Point3D), Xmin As Double, Xmax As Double) As System.Drawing.Color
+        Dim ElementTotal As Point3D = New Point3D
+        For Each element In Elements
+            ElementTotal = vertices(element) + ElementTotal
+        Next
+        Dim center As Point3D = New Point3D()
+        center = ElementTotal / Elements.Count
+        Dim color As System.Drawing.Color = New System.Drawing.Color()
+        color = CreateColorTable(center, Xmin, Xmax)(0)
+        Return color
+    End Function
+
 End Class
 
 
 
-
-'    Private Shared Function CreateColorTable(center As Point3D) As List(Of System.Windows.Media.Color)
-'        Dim colortable = New List(Of System.Windows.Media.Color)
-'        Dim alpha = 255
-'        For i = 0 To 255
-'            colortable.Add(System.Windows.Media.Color.FromArgb(alpha, 0, i, 255))
-'        Next
-
-'        For i = 1 To 255
-'            colortable.Add(System.Windows.Media.Color.FromArgb(alpha, 0, 255, 255 - i))
-'        Next
-
-'        For i = 1 To 255
-'            colortable.Add(System.Windows.Media.Color.FromArgb(alpha, i, 255, 0))
-'        Next
-
-'        For i = 1 To 255
-'            colortable.Add(System.Windows.Media.Color.FromArgb(alpha, 255, 255 - i, 0))
-'        Next
-
-'        Return colortable
-'    End Function
-'End Class
+'Dim p1 As Point3D = New Point3D()
+'Dim p2 As Point3D = New Point3D()
+'Dim p3 As Point3D = New Point3D()
+'Dim p4 As Point3D = New Point3D()
+'p1 = vertices(Element(0))
+'p2 = vertices(Element(1))
+'p3 = vertices(Element(2))
+'p4 = vertices(Element(3))
+'Dim center As Point3D = New Point3D()
+'center = (p1 + p2 + p3 + p4) / 4
+'Dim color As System.Drawing.Color = New System.Drawing.Color()
+'color = CreateColorTable(center, Xmin, Xmax)(0)
 
 
 

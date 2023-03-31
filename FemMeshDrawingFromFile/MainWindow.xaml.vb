@@ -56,6 +56,9 @@ Class MainWindow
                                                 Sub()
                                                     sim1.Entities.AddRange(entities)
                                                     sim1.Invalidate()
+
+
+
                                                 End Sub))
                                           End Sub)
 
