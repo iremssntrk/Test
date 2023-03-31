@@ -56,8 +56,8 @@ Class MainWindow
                                                 Sub()
                                                     sim1.Entities.AddRange(entities)
                                                     sim1.Invalidate()
-
-
+                                                    Dim legend = sim1.ActiveViewport.Legend
+                                                    legend.SetRange(xMin, xMax)
 
                                                 End Sub))
                                           End Sub)

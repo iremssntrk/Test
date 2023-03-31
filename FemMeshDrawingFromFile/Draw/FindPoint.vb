@@ -41,20 +41,24 @@ Public Class FindPoint
         Return xMin
     End Function
 
-    Sub PointYMin(vertices As List(Of Point3D), yMin As Double)
+    Function PointYMin(vertices As List(Of Point3D)) As Double
+        Dim yMin = vertices(0).Y
         For Each item In vertices
             If (item.Y < yMin) Then
                 yMin = item.Y
             End If
         Next
-    End Sub
-    Sub PointZMin(vertices As List(Of Point3D), zMin As Double)
+        Return yMin
+    End Function
+    Function PointZMin(vertices As List(Of Point3D)) As Double
+        Dim zMin = vertices(0).Z
         For Each item In vertices
             If (item.Z < zMin) Then
                 zMin = item.Z
             End If
         Next
-    End Sub
+        Return zMin
+    End Function
 
 
 End Class

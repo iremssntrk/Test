@@ -106,7 +106,10 @@
     <Compile Include="Draw\SimulationEntity.vb" />
     <Compile Include="Draw\SimulationClass.vb" />
     <Compile Include="Draw\Translate.vb" />
+    <Compile Include="Entity\Quad4Element.vb" />
+    <Compile Include="Entity\IFemElement.vb" />
     <Compile Include="Entity\Panel.vb" />
+    <Compile Include="Entity\Tria3Element.vb" />
     <Compile Include="File\FileSelect.vb" />
     <Compile Include="File\StreamRW.vb" />
     <Compile Include="MainWindow.xaml.vb">

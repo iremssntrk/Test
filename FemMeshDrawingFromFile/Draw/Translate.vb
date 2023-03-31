@@ -8,6 +8,7 @@ Imports devDept.Eyeshot.FontStyleCharData
 Imports devDept.Geometry
 Imports devDept.Geometry.Entities
 Imports devDept.Graphics
+Imports Xceed.Wpf.Toolkit
 
 Public Class Translate
 
@@ -41,26 +42,18 @@ Public Class Translate
 
     End Sub
 
-    Sub SumOfQuads(triangles As List(Of Element), Element As List(Of Integer), vertices As List(Of Point3D), xMin As Double, xMax As Double)
-        Dim p1 As Point3D = New Point3D()
-        Dim p2 As Point3D = New Point3D()
-        Dim p3 As Point3D = New Point3D()
-        Dim p4 As Point3D = New Point3D()
-        p1 = vertices(Element(0))
-        p2 = vertices(Element(1))
-        p3 = vertices(Element(2))
-        p4 = vertices(Element(3))
-        Dim center As Point3D = New Point3D()
-        center = (p1 + p2 + p3 + p4) / 40
-        Dim mat As Material = New Material(FindMaterialColor(Element, vertices, xMin, xMax))
-        Dim Quad = New Quad4(Element(0), Element(1), Element(2), Element(3), mat)
-        triangles.Add(Quad)
+    Sub SumOfQuads(triangles As List(Of Element), Elements As List(Of Integer), vertices As List(Of Point3D), xMin As Double, xMax As Double)
+        Dim mat As Material = New Material(FindMaterialColor(Elements, vertices, xMin, xMax))
+        Dim quad4Element As Quad4Element = New Quad4Element(Elements(0), Elements(1), Elements(2), Elements(3), mat, vertices)
+        Dim center2 = quad4Element.Center
+        triangles.Add(quad4Element)
     End Sub
 
     Sub SumOfTrias(triangles As List(Of Element), Element As List(Of Integer), vertices As List(Of Point3D), xMin As Double, xMax As Double)
         Dim material As Material = New Material(FindMaterialColor(Element, vertices, xMin, xMax))
-        Dim tri1 As Tria3 = New Tria3(Element(0), Element(1), Element(2), material)
-        triangles.Add(tri1)
+        Dim tria3Element As Tria3Element = New Tria3Element(Element(0), Element(1), Element(2), material, vertices)
+        Dim center2 = tria3Element.Center
+        triangles.Add(tria3Element)
     End Sub
 
 
