@@ -228,6 +228,7 @@ Class MainWindow
                 Debug.WriteLine("Nodal plot completed")
             Case 1
                 'Elementer plot
+                Dim normals As List(Of Vector3D) = New List(Of Vector3D)()
                 For Each panel In _block.Panels
                     Debug.WriteLine($"Creating elemanter drawing for panel: {panel.Name}")
                     Dim elements = New List(Of Element)
@@ -245,7 +246,14 @@ Class MainWindow
                                 Dim tria = New Tria3Element(twrapper.I1, twrapper.I2, twrapper.I3, mat, panel.Vertices)
                                 elements.Add(tria)
 
+                                Dim diff As Vector3D = Vector3D.Subtract(panel.Vertices(i + 2), panel.Vertices(i))
+                                Dim diff2 As Vector3D = Vector3D.Subtract(panel.Vertices(i + 1), panel.Vertices(i))
+                                Dim normal As Vector3D = Vector3D.Cross(diff, diff2)
+                                panel.Normal = normal
+                                normal.Normalize()
+
                             Case GetType(QuadWrapper)
+
                                 Dim qwrapper = DirectCast(panel.Elements(i), QuadWrapper)
                                 Dim matindex = GetIndex(qwrapper.Center.X, _block.GlobalMin, _block.GlobalMax, _colortable)
 
@@ -256,24 +264,24 @@ Class MainWindow
                                 Dim mat = New Material("Steel", System.Drawing.Color.FromArgb(255, r, g, b))
 
                                 Dim quad = New Quad4Element(qwrapper.I1, qwrapper.I2, qwrapper.I3, qwrapper.I4, mat, panel.Vertices)
+
                                 elements.Add(quad)
+
+
+                                Dim diff As Vector3D = Vector3D.Subtract(panel.Vertices(i + 1), panel.Vertices(i))
+                                Dim diff2 As Vector3D = Vector3D.Subtract(panel.Vertices(i + 2), panel.Vertices(i))
+                                Dim normal As Vector3D = Vector3D.Cross(diff, diff2)
+                                panel.Normal = normal
+                                normal.Normalize()
+                                normals.Add(normal)
+
                         End Select
                     Next
 
                     Dim femmesh = New FemMesh(panel.Vertices, elements)
 
-                    femmesh.DrawNormals()
-
-                    'Dim direction As Vector3D = femmesh.nor
-
-                    'direction.Normalize()
-
-
-
                     femmesh.ColorMethod = colorMethodType.byEntity
                     femmesh.EntityData = panel
-
-
                     femmesh.Color = System.Drawing.Color.FromArgb(_alpha, System.Drawing.Color.Gray)
                     sim1.Entities.Add(femmesh)
                 Next
@@ -316,6 +324,8 @@ Class MainWindow
             Plot()
         End If
     End Sub
+
+
 End Class
 
 

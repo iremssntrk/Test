@@ -18,6 +18,8 @@ Public Class PanelWrapper
 
     Public NumberOfVertices As Integer
 
+    Public Normal As Vector3D
+
     Public Min As Double = Double.MaxValue
 
     Public Max As Double = Double.MinValue

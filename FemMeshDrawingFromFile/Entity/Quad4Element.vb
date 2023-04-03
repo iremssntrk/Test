@@ -29,4 +29,6 @@ Public Class Quad4Element
             value = _center
         End Set
     End Property
+
+
 End Class

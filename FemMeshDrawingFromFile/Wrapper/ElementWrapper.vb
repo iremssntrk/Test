@@ -1,6 +1,8 @@
 ﻿Imports devDept.Geometry
 
 Public Class ElementWrapper
+    Inherits Point3D
+
     Public Sub New()
 
     End Sub
