@@ -22,6 +22,10 @@
 
 
     Private Elements_x As Integer
+
+    Public Sub New()
+    End Sub
+
     Public Property Elements() As Integer
         Get
             Return Elements_x

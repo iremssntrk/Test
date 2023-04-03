@@ -93,6 +93,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Wrapper\BlockWrapper.vb" />
+    <Compile Include="Wrapper\ElementWrapper.vb" />
+    <Compile Include="Wrapper\PanelWrapper.vb" />
+    <Compile Include="Wrapper\QuadWrapper.vb" />
+    <Compile Include="Wrapper\TriaWrapper.vb" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -101,6 +106,7 @@
       <DependentUpon>Application.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Class1.vb" />
     <Compile Include="Draw\FindFromEntireFile.vb" />
     <Compile Include="Draw\FindPoint.vb" />
     <Compile Include="Draw\SimulationEntity.vb" />

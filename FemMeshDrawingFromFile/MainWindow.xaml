@@ -67,6 +67,14 @@
             <Button Grid.Column="1" Height="50" Content="Translate" Click="Button_Click" />
             <xctk:PropertyGrid x:Name="ObjectPropertyGrid" ShowSearchBox="True" Margin="0,50,0,0" Height="236"/>
         <ProgressBar Height="30" x:Name="ProgressBar"/>
+            <ComboBox x:Name="PlotTypeCbx" Width="120" SelectedIndex="0">
+                <ComboBox.Items>
+                    <ComboBoxItem>Nodal</ComboBoxItem>
+
+                    <ComboBoxItem>Elemanter</ComboBoxItem> 
+                </ComboBox.Items>
+            </ComboBox>
+            <Button Content="Button" Click="Button_Click_1"/>
         </StackPanel>
 
     </Grid>
