@@ -246,8 +246,8 @@ Class MainWindow
                                 Dim tria = New Tria3Element(twrapper.I1, twrapper.I2, twrapper.I3, mat, panel.Vertices)
                                 elements.Add(tria)
 
-                                Dim diff As Vector3D = Vector3D.Subtract(panel.Vertices(i + 2), panel.Vertices(i))
-                                Dim diff2 As Vector3D = Vector3D.Subtract(panel.Vertices(i + 1), panel.Vertices(i))
+                                Dim diff As Vector3D = Vector3D.Subtract(panel.Vertices(i + 1), panel.Vertices(i))
+                                Dim diff2 As Vector3D = Vector3D.Subtract(panel.Vertices(i + 2), panel.Vertices(i + 1))
                                 Dim normal As Vector3D = Vector3D.Cross(diff, diff2)
                                 panel.Normal = normal
                                 normal.Normalize()
