@@ -247,8 +247,18 @@ Class MainWindow
                                 Dim tria = New Tria3Element(twrapper.I1, twrapper.I2, twrapper.I3, mat, panel.Vertices)
                                 elements.Add(tria)
 
-                                Dim diff As Vector3D = Vector3D.Subtract(panel.Vertices(i + 1), panel.Vertices(i))
-                                Dim diff2 As Vector3D = Vector3D.Subtract(panel.Vertices(i + 2), panel.Vertices(i + 1))
+                                Dim p1 As Point3D = New Point3D
+                                Dim p2 As Point3D = New Point3D
+                                Dim p3 As Point3D = New Point3D
+                                Dim p4 As Point3D = New Point3D
+
+                                p1 = panel.Vertices(twrapper.I1)
+                                p2 = panel.Vertices(twrapper.I2)
+                                p3 = panel.Vertices(twrapper.I3)
+
+
+                                Dim diff As Vector3D = Vector3D.Subtract(p2, p1)
+                                Dim diff2 As Vector3D = Vector3D.Subtract(p3, p1)
                                 Dim normal As Vector3D = Vector3D.Cross(diff, diff2)
                                 panel.Normal = normal
                                 normal.Normalize()
@@ -268,9 +278,19 @@ Class MainWindow
 
                                 elements.Add(quad)
 
+                                Dim p1 As Point3D = New Point3D
+                                Dim p2 As Point3D = New Point3D
+                                Dim p3 As Point3D = New Point3D
+                                Dim p4 As Point3D = New Point3D
 
-                                Dim diff As Vector3D = Vector3D.Subtract(panel.Vertices(i + 1), panel.Vertices(i))
-                                Dim diff2 As Vector3D = Vector3D.Subtract(panel.Vertices(i + 2), panel.Vertices(i))
+                                p1 = panel.Vertices(qwrapper.I1)
+                                p2 = panel.Vertices(qwrapper.I2)
+                                p3 = panel.Vertices(qwrapper.I3)
+                                p4 = panel.Vertices(qwrapper.I4)
+
+
+                                Dim diff As Vector3D = Vector3D.Subtract(p2, p1)
+                                Dim diff2 As Vector3D = Vector3D.Subtract(p3, p1)
                                 Dim normal As Vector3D = Vector3D.Cross(diff, diff2)
                                 panel.Normal = normal
                                 normal.Normalize()
