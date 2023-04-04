@@ -222,7 +222,7 @@ Class MainWindow
                     legend.SetRange(panelwrapper.Min, panelwrapper.Max)
 
                     femmesh.ContourPlot = True
-                    femmesh.PlotMode = femmesh.plotType.VonMises
+                    femmesh.PlotMode = FemMesh.plotType.VonMises
                     femmesh.ComputePlot(sim1, legend, True)
                 Next
 
