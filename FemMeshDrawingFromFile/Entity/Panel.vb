@@ -1,4 +1,6 @@
-﻿Public Class Panel
+﻿Imports devDept.Geometry
+
+Public Class Panel
 
     Private Name_x As String
     Public Property Name() As String
@@ -32,6 +34,16 @@
         End Get
         Set(ByVal value As Integer)
             Elements_x = value
+        End Set
+    End Property
+
+    Private Normals_x As Vector3D
+    Public Property Normals() As Vector3D
+        Get
+            Return Normals_x
+        End Get
+        Set(ByVal value As Vector3D)
+            Normals_x = value
         End Set
     End Property
 

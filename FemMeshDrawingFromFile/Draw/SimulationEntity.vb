@@ -12,6 +12,7 @@ Public Class SimulationEntity
                 panel.Name = panelWrap.Name
                 panel.Vertices = panelWrap.NumberOfVertices
                 panel.Elements = panelWrap.NumberOfElement
+                panel.Normals = panelWrap.Normal
             End If
         Next
         Return panel
