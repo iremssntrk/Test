@@ -1,4 +1,5 @@
 ﻿Imports System.Collections.ObjectModel
+Imports System.Reflection
 Imports System.Runtime.Remoting
 Imports System.Threading
 Imports System.Windows.Forms
@@ -262,11 +263,16 @@ Class MainWindow
 
                     Dim femmesh = New FemMesh(panel.Vertices, elements)
 
-                    femmesh.DrawNormals()
 
-                    'Dim direction As Vector3D = femmesh.nor
+                    Dim direction As Vector3D
+
+                    Dim draw As DrawParams
+
+                    'femmesh.DrawNormals(draw)
 
                     'direction.Normalize()
+
+
 
 
 
@@ -316,6 +322,23 @@ Class MainWindow
             Plot()
         End If
     End Sub
+
+    Private Sub sim1_MouseEnter(sender As Object, e As Input.MouseEventArgs) Handles sim1.MouseEnter
+
+        Dim index = sim1.GetEntityUnderMouseCursor()
+
+
+        Dim item As IFace = sim1.Entities(index)
+
+
+        Dim triangles = sim1.FindClosestTriangle(item, e.)
+
+
+        Dim meshes = item.GetPolygonMeshes()
+
+
+    End Sub
+
 End Class
 
 
