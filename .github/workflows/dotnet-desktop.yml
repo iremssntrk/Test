@@ -25,11 +25,11 @@ jobs:
 
     # Restore nuget package
     - name: restore-nuget-packages
-      run: nuget restore FemBeamAnalyzer.sln
+      run: nuget restore Test.sln
   
     #Build 
     - name: Build
-      run: msbuild.exe FemBeamAnalyzer.sln /p:platform="x64" /p:configuration="Debug" /p:Conditionals=GActions
+      run: msbuild.exe Test.sln /p:platform="x64" /p:configuration="Debug" /p:Conditionals=GActions
 
 
     - name: Enable Cache-code aster
