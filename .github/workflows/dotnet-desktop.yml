@@ -3,9 +3,9 @@ name: build
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "iremssntrk-patch-1" ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ "iremssntrk-patch-1" ]
 
 jobs:
   start:
