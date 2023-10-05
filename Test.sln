@@ -19,15 +19,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileOpen", "FileOpen\FileOp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProgressBar", "ProgressBar\ProgressBar.csproj", "{519D4C9F-BBBC-427A-86E6-E7D89AF15DD2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfDeneme", "WpfDeneme\WpfDeneme.csproj", "{C3A31075-1AF6-4618-9B7D-4DC43EDAEE91}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProgressBarWpf", "ProgressBarWpf\ProgressBarWpf.csproj", "{55DCEE78-9F63-4B0E-83B2-7A55D2C8B029}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarineParamCalculator", "MarinePararmCalculator\MarineParamCalculator.csproj", "{728A142F-576C-4BF2-B355-05B8C714E589}"
-EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "FemMeshDrawingFromFile", "FemMeshDrawingFromFile\FemMeshDrawingFromFile.vbproj", "{51CAE435-C6A7-4BE3-AD95-215B25EC5F9B}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarineParamCalculatorMustafa", "MarineParamCalculatorMustafa\MarineParamCalculatorMustafa.csproj", "{C244E550-D59A-4F8F-BE6E-491CBA199DD3}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "BeamAnalyze", "BeamAnalyze\BeamAnalyze.vbproj", "{27988039-6B62-4257-BAA5-3DC810342382}"
 EndProject
@@ -69,10 +63,6 @@ Global
 		{519D4C9F-BBBC-427A-86E6-E7D89AF15DD2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{519D4C9F-BBBC-427A-86E6-E7D89AF15DD2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{519D4C9F-BBBC-427A-86E6-E7D89AF15DD2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C3A31075-1AF6-4618-9B7D-4DC43EDAEE91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C3A31075-1AF6-4618-9B7D-4DC43EDAEE91}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C3A31075-1AF6-4618-9B7D-4DC43EDAEE91}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C3A31075-1AF6-4618-9B7D-4DC43EDAEE91}.Release|Any CPU.Build.0 = Release|Any CPU
 		{55DCEE78-9F63-4B0E-83B2-7A55D2C8B029}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{55DCEE78-9F63-4B0E-83B2-7A55D2C8B029}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{55DCEE78-9F63-4B0E-83B2-7A55D2C8B029}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -81,14 +71,6 @@ Global
 		{728A142F-576C-4BF2-B355-05B8C714E589}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{728A142F-576C-4BF2-B355-05B8C714E589}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{728A142F-576C-4BF2-B355-05B8C714E589}.Release|Any CPU.Build.0 = Release|Any CPU
-		{51CAE435-C6A7-4BE3-AD95-215B25EC5F9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{51CAE435-C6A7-4BE3-AD95-215B25EC5F9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{51CAE435-C6A7-4BE3-AD95-215B25EC5F9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{51CAE435-C6A7-4BE3-AD95-215B25EC5F9B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C244E550-D59A-4F8F-BE6E-491CBA199DD3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C244E550-D59A-4F8F-BE6E-491CBA199DD3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C244E550-D59A-4F8F-BE6E-491CBA199DD3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C244E550-D59A-4F8F-BE6E-491CBA199DD3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{27988039-6B62-4257-BAA5-3DC810342382}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{27988039-6B62-4257-BAA5-3DC810342382}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{27988039-6B62-4257-BAA5-3DC810342382}.Release|Any CPU.ActiveCfg = Release|Any CPU
