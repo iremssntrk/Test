@@ -160,6 +160,7 @@ Class MainWindow
                 localcolortable.Add(limitedcolortable(i))
             Next
         End If
+        Dim deneme
         Return localcolortable
     End Function
 
