@@ -29,7 +29,7 @@ jobs:
   
     #Build 
     - name: Build
-      run: msbuild.exe Test.sln /p:platform="x64" /p:configuration="Debug" /p:Conditionals=GActions
+      run: msbuild.exe Test.sln /p:platform="AnyCPU" /p:configuration="Debug" /p:Conditionals=GActions
 
 
     - name: Enable Cache-code aster
