@@ -156,6 +156,7 @@ Class MainWindow
             Dim maxindex = CType(Math.Round(maxindexval, 0), Integer)
 
             For i As Integer = minindex To maxindex
+
                 localcolortable.Add(limitedcolortable(i))
             Next
         End If
