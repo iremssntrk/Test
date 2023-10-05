@@ -12,7 +12,7 @@ namespace MarinePararmCalculator.Utilities.Error
         public static string NoFile="Dosya Bulunamadı";
         public static string EmptyField="Hesaplamak içiin alanlar dolu değil";
         public static string PrintOK="Çıktı alındı";
-        internal static string LogFilePathChanged="Log dosyasının konumu değiştirildi";
-        internal static string CalculationFilePathChanged = "Hesaplama dosyasının konumu değiştirildi";
+        public static string LogFilePathChanged="Log dosyasının konumu değiştirildi";
+        public static string CalculationFilePathChanged = "Hesaplama dosyasının konumu değiştirildi";
     }
 }
