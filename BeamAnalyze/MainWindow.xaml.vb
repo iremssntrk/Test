@@ -67,14 +67,28 @@ Class MainWindow
         Dim x2 = Math.Sin(rotate)
         Dim rotated = (x1 * vert_vec + x2 * hor_vec)
         rotated.Normalize()
-
         vert_vec = rotated
-
         hor_vec = Vector3D.Cross(long_vec, rotated)
         hor_vec.Normalize()
 
 
 
+        'Dim y1 = Math.Cos(rotate2)
+        'Dim y2 = Math.Sin(rotate2)
+        'Dim rotated2 = (y1 * hor_vec + y2 * vert_vec)
+        'rotated2.Normalize()
+        'hor_vec = rotated2
+        'vert_vec = Vector3D.Cross(hor_vec, long_vec)
+        'vert_vec.Normalize()
+
+
+        Dim y1 = Math.Sin(rotate2)
+        Dim y2 = Math.Cos(rotate2)
+        Dim rotated2 = (y1 * hor_vec + y2 * long_vec)
+        rotated2.Normalize()
+        hor_vec = rotated2
+        long_vec = Vector3D.Cross(hor_vec, vert_vec)
+        long_vec.Normalize()
 
 
 
