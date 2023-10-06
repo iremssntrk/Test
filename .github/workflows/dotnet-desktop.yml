@@ -115,10 +115,27 @@ jobs:
 
     - name: msvc install
       run:  |
-         echo "installing msvc"
-                  $args = '/a "C:\Users\runneradmin\vcredist_x64.exe" TARGETDIR="C:\Users\runneradmin\AppData\Local" /quiet'
-                  Start-Process -FilePath "C:\Users\runneradmin\AppData\Local\vcredist_x64.exe" 
-                  echo "msvc installation completed" 
+
+              echo "installing msvc"
+              $args = '/a "C:\Users\runneradmin\vcredist_x64.exe" TARGETDIR="C:\Users\runneradmin\AppData\Local" /quiet'
+              Start-Process -Wait -FilePath msiexec -ArgumentList $args -Verb RunAs  
+              echo "msvc installation completed" 
+
+              Start-Process -FilePath "C:\Users\runneradmin\AppData\Local\vcredist_x64.exe"
+
+             
+             # echo "installing msvc"
+             # $args = '/a "C:\Users\runneradmin\vcredist_x64.exe" TARGETDIR="C:\Users\runneradmin\AppData\Local" /quiet'
+             # Start-Process -FilePath "C:\Users\runneradmin\AppData\Local\vcredist_x64.exe" 
+             # echo "msvc installation completed" 
+
+
+
+
+
+
+      
+
 
     
     - name: code aster install check
