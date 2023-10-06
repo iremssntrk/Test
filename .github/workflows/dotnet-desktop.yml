@@ -118,7 +118,7 @@ jobs:
          echo "installing msvc"
                   #$args = '/a "C:\Users\runneradmin\vcredist_x64.exe" TARGETDIR="C:\Users\runneradmin\AppData\Local" /quiet'
                   #Start-Process -FilePath "C:\Users\runneradmin\AppData\Local\vcredist_x64.exe" 
-                  Run "C:\Users\runneradmin\vcredist_x64.exe"
+                  Start "C:\Users\runneradmin\vcredist_x64.exe"
                   echo "msvc installation completed" 
 
     
