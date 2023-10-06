@@ -32,6 +32,12 @@ jobs:
       run: msbuild.exe Test.sln /p:platform="Any CPU" /p:configuration="Debug" /p:Conditionals=GActions
 
 
+    - name: msvc install check
+      run: |
+         if(Test-Path -Path "C:\Windows\System32\msvcr110.dll"){
+                  echo "msvc installation OK"
+                }
+
     - name: Enable Cache-code aster
       id: cache-codeaster
       uses: actions/cache@v2
@@ -39,7 +45,7 @@ jobs:
         path: C:\Users\runneradmin\code-aster_v2021_std.msi
         key: ${{ env.cache-name-codeaster }}
         
-    
+  
     - name: download code aster
       if: steps.cache-codeaster.outputs.cache-hit != 'true'
       run : |
@@ -119,6 +125,6 @@ jobs:
 
     - name: msvc install check
       run: |
-         if(Test-Path -Path "HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\VisualStudio\11.0\VC\Runtimes\x86"==1){
+         if(Test-Path -Path "C:\Windows\System32\msvcr110.dll"){
                   echo "msvc installation OK"
                 }
