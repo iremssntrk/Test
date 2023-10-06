@@ -35,7 +35,7 @@ jobs:
       id: cache-codeaster
       uses: actions/cache@v2
       with:
-        path: C:\Users\runneradmin\
+        path: C:\Users\runneradmin\code-aster_v2021_std.msi
         key: ${{ env.cache-name-codeaster }}
         
     
