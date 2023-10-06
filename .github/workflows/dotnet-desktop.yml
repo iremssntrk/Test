@@ -85,6 +85,8 @@ jobs:
                 echo "code_aster directory doesn't exists"
                 echo "it appears that installation was unsuccessfull"
               }
+
+
             
     - name: Verify cached file
       run: ls C:\Users\runneradmin\code-aster_v2021_std.msi   
@@ -101,7 +103,7 @@ jobs:
       if: steps.cache-msvc.outputs.cache-hit != 'true'
       run : |
            
-            if(Test-Path -Path "C:\Users\runneradmin\AppData\Local\vcredist_x64.exe"){
+            if(Test-Path -Path "C:\Users\runneradmin\vcredist_x64.exe"){
                 echo "code_aster installation file exists"
               }
               else{
@@ -114,8 +116,9 @@ jobs:
     - name: msvc install
       run:  |
          echo "installing msvc"
-                  $args = '/a "C:\Users\runneradmin\vcredist_x64.exe" TARGETDIR="C:\Users\runneradmin\AppData\Local" /quiet'
-                  Start-Process -FilePath "C:\Users\runneradmin\AppData\Local\vcredist_x64.exe" 
+                  #$args = '/a "C:\Users\runneradmin\vcredist_x64.exe" TARGETDIR="C:\Users\runneradmin\AppData\Local" /quiet'
+                  #Start-Process -FilePath "C:\Users\runneradmin\AppData\Local\vcredist_x64.exe" 
+                  Run "C:\Users\runneradmin\vcredist_x64.exe"
                   echo "msvc installation completed" 
 
     
