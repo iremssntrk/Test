@@ -99,7 +99,7 @@ jobs:
       run: ls C:\Users\runneradmin\code-aster_v2021_std.msi     
 
     #Install msvc
-    - name: Install msvc
+    - name: download msvc
       if: steps.cache-msvc.outputs.cache-hit != 'true'
       run : |
            
@@ -111,12 +111,16 @@ jobs:
                 echo "msvc download completed" 
               }
              
-            echo "installing msvc"
-            $args = '/a "C:\Users\runneradmin\vcredist_x64.exe" TARGETDIR="C:\Users\runneradmin\AppData\Local" /quiet'
-            Start-Process -FilePath "C:\Users\runneradmin\vcredist_x64.exe" 
-            echo "msvc installation completed" 
+           
 
+    - name: msvc install
+      run:  |
+         echo "installing msvc"
+                  $args = '/a "C:\Users\runneradmin\vcredist_x64.exe" TARGETDIR="C:\Users\runneradmin\AppData\Local" /quiet'
+                  Start-Process -FilePath "C:\Users\runneradmin\vcredist_x64.exe" 
+                  echo "msvc installation completed" 
 
+    
     - name: code aster install check
       run: |
          if(Test-Path -Path "C:\Users\runneradmin\AppData\Local\code_aster"){
