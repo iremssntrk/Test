@@ -118,6 +118,6 @@ jobs:
 
     - name: msvc install check
       run: |
-         if(Test-Path -Path "HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\VisualStudio\11.0\VC\Runtimes\x86"=1){
+         if(Test-Path -Path "HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\VisualStudio\11.0\VC\Runtimes\x86"==1){
                   echo "msvc installation OK"
                 }
