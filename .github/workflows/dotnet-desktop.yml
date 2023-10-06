@@ -10,7 +10,7 @@ on:
 jobs:
 
   start:
-    runs-on: windows-latest  
+    runs-on: ubuntu-latest  
     env:  
        cache-name-codeaster: code-aster-2021-installer
        cache-name-msvc: vcredist-2010-installer
