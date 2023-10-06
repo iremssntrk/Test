@@ -13,6 +13,7 @@ jobs:
     env:  
        cache-name-codeaster: code-aster-2021-installer
        cache-name-msvc: vcredist-2010-installer
+       NUGET_CERT_REVOCATION_MODE: offline
     steps:
     - name: Checkout
       uses: actions/checkout@v3
