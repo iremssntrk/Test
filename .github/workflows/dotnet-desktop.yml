@@ -86,24 +86,22 @@ jobs:
                 echo "it appears that installation was unsuccessfull"
               }
             
-
+    - name: Verify cached file
+      run: ls C:\Users\runneradmin\code-aster_v2021_std.msi   
             
     - name: Enable Cache-msvc
       id: cache-msvc
       uses: actions/cache@v2
       with:
         path: C:\Users\runneradmin\runneradmin\vcredist_x64.exe
-        key: ${{ env.cache-name-msvc }}
+        key: ${{ env.cache-name-msvc }}  
 
-    - name: Verify cached file
-      run: ls C:\Users\runneradmin\code-aster_v2021_std.msi     
 
-    #Install msvc
     - name: download msvc
       if: steps.cache-msvc.outputs.cache-hit != 'true'
       run : |
            
-            if(Test-Path -Path "C:\Users\runneradmin\vcredist_x64.exe"){
+            if(Test-Path -Path "C:\Users\runneradmin\AppData\Local\vcredist_x64.exe"){
                 echo "code_aster installation file exists"
               }
               else{
@@ -117,7 +115,7 @@ jobs:
       run:  |
          echo "installing msvc"
                   $args = '/a "C:\Users\runneradmin\vcredist_x64.exe" TARGETDIR="C:\Users\runneradmin\AppData\Local" /quiet'
-                  Start-Process -FilePath "C:\Users\runneradmin\vcredist_x64.exe" 
+                  Start-Process -FilePath "C:\Users\runneradmin\AppData\Local\vcredist_x64.exe" 
                   echo "msvc installation completed" 
 
     
