@@ -95,7 +95,7 @@ jobs:
       id: cache-msvc
       uses: actions/cache@v2
       with:
-        path: C:\Users\runneradmin\runneradmin\vcredist_x64.exe
+        path: C:\Users\runneradmin\vcredist_x64.exe
         key: ${{ env.cache-name-msvc }}  
 
 
