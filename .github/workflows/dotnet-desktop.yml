@@ -124,7 +124,7 @@ jobs:
     
     - name: code aster install check
       run: |
-         MsiProductCheck Property="VCRedistInstalled" Product="{F0C3E5D1-1ADE-321E-8167-68EF0DE699A5}"
+         Get-ItemProperty -Path "HKLM:\SOFTWARE$OS\Microsoft\VisualStudio\14.0\VC\Runtimes\x86" -ErrorAction SilentlyContinue -ErrorVariable eVcRedist
 
     - name: msvc install check
       run: |
