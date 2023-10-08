@@ -123,7 +123,6 @@ jobs:
     
     - name: code aster install check2
       run: |
-
           $vcredist = Get-ItemProperty -Path "HKLM:\SOFTWARE$OS\Microsoft\VisualStudio\14.0\VC\Runtimes\x86" -ErrorAction SilentlyContinue -ErrorVariable eVcRedist
           echo ${{vcredist}}
           echo $"{{vcredist}}"
