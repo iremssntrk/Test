@@ -31,11 +31,6 @@ jobs:
     - name: Build
       run: msbuild.exe Test.sln /p:platform="Any CPU" /p:configuration="Debug" /p:Conditionals=GActions
 
-
-    - name: msvc install check
-      run: |
-          "C:\Program Files (x86)\Microsoft Visual Studio\Installer\vswhere.exe" -property catalog_productDisplayVersion
-
     - name: Enable Cache-code aster
       id: cache-codeaster
       uses: actions/cache@v2
@@ -129,7 +124,7 @@ jobs:
     
     - name: code aster install check
       run: |
-         "C:\Program Files (x86)\Microsoft Visual Studio\Installer\vswhere.exe" -property catalog_productDisplayVersion
+         MsiProductCheck Property="VCRedistInstalled" Product="{F0C3E5D1-1ADE-321E-8167-68EF0DE699A5}"
 
     - name: msvc install check
       run: |
