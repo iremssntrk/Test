@@ -121,7 +121,7 @@ jobs:
              # echo "msvc installation completed" 
 
     
-    - name: code aster install check
+    - name: code aster install check2
       run: |
          Get-ItemProperty -Path "HKLM:\SOFTWARE$OS\Microsoft\VisualStudio\14.0\VC\Runtimes\x86" -ErrorAction SilentlyContinue -ErrorVariable eVcRedist
 
