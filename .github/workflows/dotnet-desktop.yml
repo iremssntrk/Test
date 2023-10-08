@@ -34,9 +34,7 @@ jobs:
 
     - name: msvc install check
       run: |
-         if(Test-Path -Path "C:\Windows\System32\msvcr110.dll"){
-                  echo "msvc installation OK"
-                }
+          "C:\Program Files (x86)\Microsoft Visual Studio\Installer\vswhere.exe" -property catalog_productDisplayVersion
 
     - name: Enable Cache-code aster
       id: cache-codeaster
@@ -131,9 +129,7 @@ jobs:
     
     - name: code aster install check
       run: |
-         if(Test-Path -Path "C:\Users\runneradmin\AppData\Local\code_aster"){
-                  echo "code_aster installation OK"
-                }
+         "C:\Program Files (x86)\Microsoft Visual Studio\Installer\vswhere.exe" -property catalog_productDisplayVersion
 
     - name: msvc install check
       run: |
