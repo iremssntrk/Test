@@ -125,12 +125,15 @@ jobs:
       run: |
 
           $vcredist = Get-ItemProperty -Path "HKLM:\SOFTWARE$OS\Microsoft\VisualStudio\14.0\VC\Runtimes\x86" -ErrorAction SilentlyContinue -ErrorVariable eVcRedist
+          echo $vcredist
           if ($eVcRedist) {
               $Warning += @( "Abbyy FineReader 15 requires VCRedist." )
           }
           elseif (($vcredist.Bld -le 24215)) {
               $Warning += @( "Abbyy FineReader 15 requires VCRedist." )
           }
+
+          
 
     - name: msvc install check
       run: |
