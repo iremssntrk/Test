@@ -28,6 +28,7 @@ jobs:
   
     #Build 
     - name: Build
+      if: always() && Not cancelled()
       run: msbuild.exe Test.sln /p:platform="Any CPU" /p:configuration="Debug" /p:Conditionals=GActions
 
     - name: Enable Cache-code aster
@@ -36,28 +37,4 @@ jobs:
       with:
         path: C:\Users\runneradmin\code-aster_v2021_std.msi
         key: ${{ env.cache-name-codeaster }}
-        
 
-  FunctionalTest:
-    needs: start
-    runs-on: windows-latest  
-    
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-      with:
-        fetch-depth: 0
-
-
-  UnitTest:
-    needs: start
-    runs-on: windows-latest  
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v3
-      with:
-        fetch-depth: 0
-
-
-    - name: Build
-      run: msbuild.exe Test.sln /p:platform="Any CPU" /p:configuration="Debug" /p:Conditionals=GActions
