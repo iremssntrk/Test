@@ -28,7 +28,7 @@ jobs:
   
     #Build 
     - name: Build
-      if: always() && ! Not cancelled()
+      if: always() && !cancelled()
       run: msbuild.exe Test.sln /p:platform="Any CPU" /p:configuration="Debug" /p:Conditionals=GActions
 
     - name: Enable Cache-code aster
