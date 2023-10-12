@@ -37,66 +37,6 @@ jobs:
         path: C:\Users\runneradmin\code-aster_v2021_std.msi
         key: ${{ env.cache-name-codeaster }}
         
-  
-    - name: download code aster
-      if: steps.cache-codeaster.outputs.cache-hit != 'true'
-      run : |
-            if (Test-Path -Path "C:\Users\runneradmin\AppData\Local\code_aster")
-            {
-              echo "code_aster directory exists"  
-            } 
-            else
-            {
-              echo "code_aster directory doesn't exists"
-              if(Test-Path -Path "C:\Users\runneradmin\code-aster_v2021_std.msi"){
-                echo "code_aster installation file exists" } 
-                else
-              {  
-                # Download the .msi installer (replace with the actual download link)
-                echo "code_aster installation file doesn't exists"
-                echo "downloading code aster"
-                Invoke-WebRequest -Uri "https://simulease.com/wp-content/uploads/2022/02/code-aster_v2021_std.msi" -OutFile "C:\Users\runneradmin\code-aster_v2021_std.msi"
-                echo "code aster download completed" 
-              }
-              }
-
-    - name: install code aster
-      run : |
-              echo "installing code aster"
-              $args = '/a "C:\Users\runneradmin\code-aster_v2021_std.msi" TARGETDIR="C:\Users\runneradmin\AppData\Local" /quiet'
-              Start-Process -Wait -FilePath msiexec -ArgumentList $args -Verb RunAs  
-              echo "code aster installation completed" 
-              echo "checking code aster installation path"
-              if (Test-Path -Path "C:\Users\runneradmin\AppData\Local\code_aster") {
-                echo "code_aster directory exists"
-                echo "it appears that installation was successfull" 
-                echo "updating pyd links for code aster" 
-                Start-Process -FilePath "C:\Users\runneradmin\AppData\Local\code_aster\v2021\15.4\update_pyd_links.bat"
-                echo "update pyd links for code aster is done" 
-              } else {
-                echo "code_aster directory doesn't exists"
-                echo "it appears that installation was unsuccessfull"
-              }
-
-             
-         
-
-    - name: msvc install
-      run:  |
-              echo "installing msvc"
-              #$args = '/a "C:\Users\runneradmin\vcredist_x64.exe" TARGETDIR="C:\Users\runneradmin\AppData\Local" /quiet'
-              #Start-Process vcredist_x64.exe -Verb RunAs  
-              echo "msvc installation completed" 
-
-              Start-Process -FilePath "C:\Users\runneradmin\vcredist_x64.exe"
-
-             
-             # echo "installing msvc"
-             # $args = '/a "C:\Users\runneradmin\vcredist_x64.exe" TARGETDIR="C:\Users\runneradmin\AppData\Local" /quiet'
-             # Start-Process -FilePath "C:\Users\runneradmin\AppData\Local\vcredist_x64.exe" 
-             # echo "msvc installation completed" 
-
-  
 
   FunctionalTest:
     needs: start
