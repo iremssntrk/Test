@@ -20,13 +20,7 @@ jobs:
 
     - name: Setup MsBuild
       uses: microsoft/setup-msbuild@v1.3.1
-
-       #Build 
-    - name: Build
-      if: always() && !cancelled()
-      run: msbuild.exe Test.sln /p:platform="Any CPU" /p:configuration="Debug" /p:Conditionals=GActions
-
-      
+    
     - name: Enable Cache-code aster
       id: cache-codeaster
       uses: actions/cache@v2
@@ -65,6 +59,11 @@ jobs:
         path: C:\Users\runneradmin\code-aster_v2021_std.msi
         key: ${{ env.cache-name-codeaster }}         
 
+       #Build 
+    - name: Build
+      run: msbuild.exe Test.sln /p:platform="Any CPU" /p:configuration="Debug" /p:Conditionals=GActions
+
+
     - name: install code aster
       run : |
               echo "installing code aster"
@@ -87,8 +86,6 @@ jobs:
     - name: Verify cached file
       run: ls C:\Users\runneradmin\code-aster_v2021_std.msi     
 
-
-      
 
     # Restore nuget package
     - name: restore-nuget-packages
