@@ -50,14 +50,7 @@ jobs:
                 echo "code aster download completed" 
               }
               }
-
-    - name: Build
-      run: /build.sh
-    - uses: actions/cache/save@v3
-      if: always() 
-      with:
-        path: C:\Users\runneradmin\code-aster_v2021_std.msi
-        key: ${{ env.cache-name-codeaster }}         
+   
 
        #Build 
     - name: Build
@@ -85,6 +78,14 @@ jobs:
 
     - name: Verify cached file
       run: ls C:\Users\runneradmin\code-aster_v2021_std.msi     
+
+    - name: Build
+      run: /build.sh
+    - uses: actions/cache/save@v3
+      if: always() 
+      with:
+        path: C:\Users\runneradmin\code-aster_v2021_std.msi
+        key: ${{ env.cache-name-codeaster }}      
 
 
     # Restore nuget package
