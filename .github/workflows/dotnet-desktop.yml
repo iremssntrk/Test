@@ -11,7 +11,6 @@ jobs:
     runs-on: windows-latest  
     env:  
        cache-name-codeaster: code-aster-2021-installer
-       NUGET_CERT_REVOCATION_MODE: offline
     steps:
     - name: Checkout
       uses: actions/checkout@v3
