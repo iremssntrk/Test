@@ -21,8 +21,12 @@ jobs:
       shell: bash
       run: echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
       id: extract_branch
-      
 
+    - name: Extract branch name
+      shell: bash
+      run: echo "branch=${github.head_ref}}"
+
+      
     - name: restore cache 
       id: restore-cache
       uses: actions/cache/restore@v3
@@ -60,7 +64,7 @@ jobs:
 
     - name: deneme
       run: actions/denemeV3
-            
+            https://github.com/iremssntrk/Test/blob/iremssntrk-patch-1/.github/workflows/dotnet-desktop.yml
 
     - name: install code aster
       run : |
