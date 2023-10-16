@@ -82,7 +82,7 @@ jobs:
       run: /build.sh
       
     - uses: actions/cache/save@v3
-      if: always() & (steps.restore-cache.outputs.cache-hit != 'true')
+      if: always() && (steps.restore-cache.outputs.cache-hit != 'true')
       with:
         path: C:\Users\runneradmin\code-aster_v2021_std.msi
         key: ${{ env.cache-name-codeaster }}  
