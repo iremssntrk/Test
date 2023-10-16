@@ -58,6 +58,9 @@ jobs:
               }
    
 
+    - name: deneme
+      run: actions/denemeV3
+            
 
     - name: install code aster
       run : |
