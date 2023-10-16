@@ -16,18 +16,28 @@ jobs:
       uses: actions/checkout@v3
       with:
         fetch-depth: 0
-    
+
     - name: Enable Cache-code aster
+      if: false
       id: cache-codeaster
       uses: actions/cache@v2
       with:
         path: C:\Users\runneradmin\code-aster_v2021_std.msi
         key: ${{ env.cache-name-codeaster }}
         
+
+    - name: restore cache 
+      id: restore-cache
+      uses: actions/cache/restore@v3
+      with:
+        path: C:\Users\runneradmin\code-aster_v2021_std.msi
+        key: ${{ env.cache-name-codeaster }}
+
+
     - name: save cache
       run: /build.sh
     - uses: actions/cache/save@v3
-      if: (Test-Path -Path "C:\Users\runneradmin\AppData\Local\code_aster")
+      if: always()
       with:
         path: C:\Users\runneradmin\code-aster_v2021_std.msi
         key: ${{ env.cache-name-codeaster }}  
@@ -35,7 +45,7 @@ jobs:
 
 
     - name: download code aster
-      if: steps.cache-codeaster.outputs.cache-hit != 'true'
+      if: steps.restore-cache.outputs.cache-hit != 'true'
       run : |
             if (Test-Path -Path "C:\Users\runneradmin\AppData\Local\code_aster")
             {
@@ -83,7 +93,6 @@ jobs:
                 echo "code_aster directory doesn't exists"
                 echo "it appears that installation was unsuccessfull"
               }           
-   
 
     - name: Verify cached file
       run: ls C:\Users\runneradmin\code-aster_v2021_std.msi     
