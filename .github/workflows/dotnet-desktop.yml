@@ -28,7 +28,7 @@ jobs:
       uses: actions/cache/restore@v3
       with:
         path: C:\Users\runneradmin\code-aster_v2021_std.msi
-        key: ${{ env.cache-name-codeaster }}-${{ steps.extract_branch.outputs.branch }}
+        key: ${{ env.cache-name-codeaster }}
 
 
     - name: Setup MsBuild
@@ -88,7 +88,7 @@ jobs:
       if: always() && !cancelled() && steps.download-codeaster.outcome == 'success' 
       with:
         path: C:\Users\runneradmin\code-aster_v2021_std.msi
-        key: ${{ env.cache-name-codeaster }}-${{ steps.extract_branch.outputs.branch }} 
+        key: ${{ env.cache-name-codeaster }}
 
     # Restore nuget package
     - name: restore-nuget-packages
