@@ -22,17 +22,13 @@ jobs:
       run: echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
       id: extract_branch
 
-    - name: Extract branch name
-      shell: bash
-      run: echo "branch=$${{ github.head_ref || github.ref_name }}" >> $GITHUB_OUTPUT
 
-      
     - name: restore cache 
       id: restore-cache
       uses: actions/cache/restore@v3
       with:
         path: C:\Users\runneradmin\code-aster_v2021_std.msi
-        key: ${{ env.cache-name-codeaster }}
+        key: ${{ env.cache-name-codeaster }}-${{ steps.extract_branch.outputs.branch }}
 
 
     - name: Setup MsBuild
@@ -92,7 +88,7 @@ jobs:
       if: always() && !cancelled() && steps.download-codeaster.outcome == 'success' 
       with:
         path: C:\Users\runneradmin\code-aster_v2021_std.msi
-        key: ${{ env.cache-name-codeaster }}
+        key: ${{ env.cache-name-codeaster }}-${{ steps.extract_branch.outputs.branch }}
 
     # Restore nuget package
     - name: restore-nuget-packages
