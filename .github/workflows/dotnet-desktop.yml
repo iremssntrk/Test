@@ -29,10 +29,6 @@ jobs:
     - name: Setup MsBuild
       uses: microsoft/setup-msbuild@v1.3.1
 
-       #Build 
-    - name: Build
-      run: msbuild.exe Test.sln /p:platform="Any CPU" /p:configuration="Debug" /p:Conditionals=GActions
-
 
     - name: download code aster
       if: steps.restore-cache.outputs.cache-hit != 'true'
