@@ -36,6 +36,7 @@ jobs:
 
 
     - name: download code aster
+      id: download-codeaster
       if: steps.restore-cache.outputs.cache-hit != 'true'
       run : |
             if (Test-Path -Path "C:\Users\runneradmin\AppData\Local\code_aster")
@@ -83,7 +84,7 @@ jobs:
 
       
     - uses: actions/cache/save@v3
-      if: always() && (steps.restore-cache.outputs.cache-hit != 'true')
+      if: always() && !cancelled() && steps.download-codeaster.outcome == 'success' 
       with:
         path: C:\Users\runneradmin\code-aster_v2021_std.msi
         key: ${{ env.cache-name-codeaster }}-${{ steps.extract_branch.outputs.branch }} 
