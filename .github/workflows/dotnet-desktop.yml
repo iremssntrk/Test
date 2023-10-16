@@ -16,14 +16,19 @@ jobs:
       uses: actions/checkout@v3
       with:
         fetch-depth: 0
-
+        
+    - name: Extract branch name
+      shell: bash
+      run: echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
+      id: extract_branch
+      
 
     - name: restore cache 
       id: restore-cache
       uses: actions/cache/restore@v3
       with:
         path: C:\Users\runneradmin\code-aster_v2021_std.msi
-        key: ${{ env.cache-name-codeaster }}
+        key: ${{ env.cache-name-codeaster }}-${{ steps.extract_branch.outputs.branch }}
 
 
     - name: Setup MsBuild
@@ -76,16 +81,12 @@ jobs:
     - name: Verify cached file
       run: ls C:\Users\runneradmin\code-aster_v2021_std.msi     
 
-
-    - name: save cache
-      if: false
-      run: /build.sh
       
     - uses: actions/cache/save@v3
       if: always() && (steps.restore-cache.outputs.cache-hit != 'true')
       with:
         path: C:\Users\runneradmin\code-aster_v2021_std.msi
-        key: ${{ env.cache-name-codeaster }}  
+        key: ${{ env.cache-name-codeaster }}-${{ steps.extract_branch.outputs.branch }} 
 
     # Restore nuget package
     - name: restore-nuget-packages
