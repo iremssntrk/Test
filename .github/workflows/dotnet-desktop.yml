@@ -34,15 +34,6 @@ jobs:
         key: ${{ env.cache-name-codeaster }}
 
 
-    - name: save cache
-      run: /build.sh
-    - uses: actions/cache/save@v3
-      if: always()
-      with:
-        path: C:\Users\runneradmin\code-aster_v2021_std.msi
-        key: ${{ env.cache-name-codeaster }}  
-
-
 
     - name: download code aster
       if: steps.restore-cache.outputs.cache-hit != 'true'
@@ -97,6 +88,14 @@ jobs:
     - name: Verify cached file
       run: ls C:\Users\runneradmin\code-aster_v2021_std.msi     
 
+
+    - name: save cache
+      run: /build.sh
+    - uses: actions/cache/save@v3
+      if: always()
+      with:
+        path: C:\Users\runneradmin\code-aster_v2021_std.msi
+        key: ${{ env.cache-name-codeaster }}  
 
     # Restore nuget package
     - name: restore-nuget-packages
