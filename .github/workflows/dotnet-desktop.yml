@@ -24,7 +24,7 @@ jobs:
 
     - name: Extract branch name
       shell: bash
-      run: echo "branch=${github.head_ref}}"
+      run: echo "branch=$${{ github.head_ref || github.ref_name }}" >> $GITHUB_OUTPUT
 
       
     - name: restore cache 
