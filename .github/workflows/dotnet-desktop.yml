@@ -17,14 +17,6 @@ jobs:
       with:
         fetch-depth: 0
 
-    - name: Enable Cache-code aster
-      if: false
-      id: cache-codeaster
-      uses: actions/cache@v2
-      with:
-        path: C:\Users\runneradmin\code-aster_v2021_std.msi
-        key: ${{ env.cache-name-codeaster }}
-        
 
     - name: restore cache 
       id: restore-cache
@@ -33,6 +25,13 @@ jobs:
         path: C:\Users\runneradmin\code-aster_v2021_std.msi
         key: ${{ env.cache-name-codeaster }}
 
+
+    - name: Setup MsBuild
+      uses: microsoft/setup-msbuild@v1.3.1
+
+       #Build 
+    - name: Build
+      run: msbuild.exe Test.sln /p:platform="Any CPU" /p:configuration="Debug" /p:Conditionals=GActions
 
 
     - name: download code aster
@@ -58,13 +57,6 @@ jobs:
               }
    
 
-
-    - name: Setup MsBuild
-      uses: microsoft/setup-msbuild@v1.3.1
-
-       #Build 
-    - name: Build
-      run: msbuild.exe Test.sln /p:platform="Any CPU" /p:configuration="Debug" /p:Conditionals=GActions
 
 
     - name: install code aster
