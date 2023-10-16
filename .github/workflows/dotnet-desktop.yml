@@ -34,7 +34,6 @@ jobs:
     - name: Setup MsBuild
       uses: microsoft/setup-msbuild@v1.3.1
 
-
     - name: download code aster
       id: download-codeaster
       if: steps.restore-cache.outputs.cache-hit != 'true'
