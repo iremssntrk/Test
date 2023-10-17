@@ -39,6 +39,7 @@
                         <ddes:Histogram Lighting="False" Visible="True"/>
                     </ddes:Viewport.Histogram>
                     <ddes:Viewport.Legends>
+                      
                         <ddes:Legend Lighting="False"/>
                     </ddes:Viewport.Legends>
                     <ddes:Viewport.OriginSymbols>                  
