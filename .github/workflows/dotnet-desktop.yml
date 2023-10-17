@@ -57,11 +57,6 @@ jobs:
               }
               }
    
-
-    - name: deneme
-      run: actions/denemeV3
-            https://github.com/iremssntrk/Test/blob/iremssntrk-patch-1/.github/workflows/dotnet-desktop.yml
-
     - name: install code aster
       run : |
               echo "installing code aster"
