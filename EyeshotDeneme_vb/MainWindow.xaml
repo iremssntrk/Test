@@ -43,6 +43,7 @@
                         <ddes:Legend Lighting="False"/>
                     </ddes:Viewport.Legends>
                     <ddes:Viewport.OriginSymbols>
+                      
                         <ddes:OriginSymbol Lighting="False"/>
                     </ddes:Viewport.OriginSymbols>
                     <ddes:Viewport.ToolBars>
