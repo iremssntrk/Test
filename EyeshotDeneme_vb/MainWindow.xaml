@@ -32,7 +32,7 @@
                     <ddes:Viewport.Camera>
                         <ddes:Camera Distance="331.10339631698054" FocalLength="50" NearPlaneDistanceFactor="0.001" ProjectionMode="Perspective" Rotation="0.12940952255126, 0.224143868042013, 0.482962913144534, 0.836516303737808" Target="63.764873172259, -106.381396640394, 138.640972525508"/>
                     </ddes:Viewport.Camera>
-                    <ddes:Viewport.Grids>
+                    <ddes:Viewport.Grids>                 
                         <ddes:Grid AutoSize="False" Lighting="False" Min="-100, -100" Max="100, 100" Step="10"/>
                     </ddes:Viewport.Grids>
                     <ddes:Viewport.Histogram>
@@ -42,8 +42,7 @@
                       s>
                         <ddes:Legend Lighting="False"/>
                     </ddes:Viewport.Legends>
-                    <ddes:Viewport.OriginSymbols>
-                      
+                    <ddes:Viewport.OriginSymbols>                  
                         <ddes:OriginSymbol Lighting="False"/>
                     </ddes:Viewport.OriginSymbols>
                     <ddes:Viewport.ToolBars>
