@@ -55,20 +55,29 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
+    <Compile Include="Calculation\CalculationManager.cs" />
+    <Compile Include="Calculation\ParameterCalculation\Concreate\CbCalculator.cs" />
+    <Compile Include="Calculation\ParameterCalculation\Concreate\DeltaCalculator.cs" />
+    <Compile Include="Calculation\ParameterCalculation\Abstract\ICbCalculator.cs" />
+    <Compile Include="Calculation\ParameterCalculation\Abstract\IDeltaCalculator.cs" />
+    <Compile Include="Entities\Parameter.cs" />
+    <Compile Include="Utilities\Error\DataResult.cs" />
+    <Compile Include="Utilities\Error\MessageString.cs" />
+    <Compile Include="Utilities\Error\IDataResult.cs" />
+    <Compile Include="Utilities\Error\IResult.cs" />
+    <Compile Include="Utilities\Error\Result.cs" />
+    <Compile Include="Utilities\FilePath\Abstract\IFileSelection.cs" />
+    <Compile Include="Utilities\FileManagement.cs" />
+    <Compile Include="Utilities\FilePath\Concreate\StreamRWClass.cs" />
+    <Compile Include="Utilities\InputFormat.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="Utilities\FilePath\Concreate\OpenFileDialogClass.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Utilities\FilePath\Abstract\IPathSelection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

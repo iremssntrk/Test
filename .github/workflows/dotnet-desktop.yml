@@ -1,0 +1,90 @@
+name: build
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  start:
+    runs-on: windows-latest  
+    env:  
+       cache-name-codeaster: code-aster-2021-installer
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+        
+    - name: Extract branch name
+      shell: bash
+      run: echo "branch=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
+      id: extract_branch
+
+
+    - name: restore cache 
+      id: restore-cache
+      uses: actions/cache/restore@v3
+      with:
+        path: C:\Users\runneradmin\code-aster_v2021_std.msi
+        key: ${{ env.cache-name-codeaster }}
+
+
+    - name: Setup MsBuild
+      uses: microsoft/setup-msbuild@v1.3.1
+
+    - name: download code aster
+      id: download-codeaster
+      if: steps.restore-cache.outputs.cache-hit != 'true'
+      run : |
+            if (Test-Path -Path "C:\Users\runneradmin\AppData\Local\code_aster")
+            {
+              echo "code_aster directory exists"  
+            } 
+            else
+            {
+              echo "code_aster directory doesn't exists"
+              if(Test-Path -Path "C:\Users\runneradmin\code-aster_v2021_std.msi"){
+                echo "code_aster installation file exists" } 
+                else
+              {  
+                # Download the .msi installer (replace with the actual download link)
+                echo "code_aster installation file doesn't exists"
+                echo "downloading code aster"
+                Invoke-WebRequest -Uri "https://simulease.com/wp-content/uploads/2022/02/code-aster_v2021_std.msi" -OutFile "C:\Users\runneradmin\code-aster_v2021_std.msi"
+                echo "code aster download completed" 
+              }
+              }
+   
+    - name: install code aster
+      run : |
+              echo "installing code aster"
+              $args = '/a "C:\Users\runneradmin\code-aster_v2021_std.msi" TARGETDIR="C:\Users\runneradmin\AppData\Local" /quiet'
+              Start-Process -Wait -FilePath msiexec -ArgumentList $args -Verb RunAs  
+              echo "code aster installation completed" 
+              echo "checking code aster installation path"
+              if (Test-Path -Path "C:\Users\runneradmin\AppData\Local\code_aster") {
+                echo "code_aster directory exists"
+                echo "it appears that installation was successfull" 
+                echo "updating pyd links for code aster" 
+                Start-Process -FilePath "C:\Users\runneradmin\AppData\Local\code_aster\v2021\15.4\update_pyd_links.bat"
+                echo "update pyd links for code aster is done" 
+              } else {
+                echo "code_aster directory doesn't exists"
+                echo "it appears that installation was unsuccessfull"
+              }           
+
+    - name: Verify cached file
+      run: ls C:\Users\runneradmin\code-aster_v2021_std.msi     
+
+      
+    - uses: actions/cache/save@v3
+      if: always() && !cancelled() && steps.download-codeaster.outcome == 'success' 
+      with:
+        path: C:\Users\runneradmin\code-aster_v2021_std.msi
+        key: ${{ env.cache-name-codeaster }}
+
+    # Restore nuget package
+    - name: restore-nuget-packages
+      run: nuget restore Test.sln
